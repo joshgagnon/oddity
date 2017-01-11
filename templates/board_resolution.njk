@@ -1,0 +1,71 @@
+{% extends 'layouts/default.njs' %}
+
+{% import 'partials/macros.njs' as macros %}
+
+{% block body %}
+
+{% if resolutionOptions.resolutionType == 'Resolution at Board Meeting' %}
+    {% set documentDate = resolutionOptions.dateOfMinute %}
+{% else %}
+    {% set documentDate = resolutionOptions.dateOfResolution %}
+{% endif %}
+
+{{ macros.title('Board Resolution') }}
+{{ macros.company_info_subtitle(company.companyName, company.companyNumber) }}
+{{ macros.date_subtitle(documentDate) }}
+
+<text:h text:outline-level="1" text:style-name="P27">
+    <text:span text:style-name="T11">
+    </text:span>
+</text:h>
+
+<text:p text:style-name="P19">
+{% if resolutionOptions.resolutionType == 'Resolution at Board Meeting' %}
+    This minute records that on {{ resolution.dateOfBoardMeeting }} the directors of the Company held a board meeting, during which the following resolution(s) was/were passed:
+{% else %}
+    The board of the Company hereby makes the following written resolution(s):
+{% endif %}
+</text:p>
+
+<text:list text:style-name="L3" xml:id="list8784318185323555822">
+    {% for resolution in resolutions %}
+        <text:list-item>
+            {% if resolution.individualResolutionType == 'Custom' %}
+                <text:p text:style-name="P37">{{ resolution.resolutionOptions.text }}</text:p>
+            {% elif resolution.individualResolutionType == 'Change Company Name' %}
+                <text:p text:style-name="P37">That an application to change the Company’s name to {{ resolution.resolutionOptions.newCompanyName }} be submitted to the Registrar of Companies on {{ resolution.resolutionOptions.effectiveDate }}, and that any director of the Company be approved to submit the application. [Companies Act 1993, s 23(1)(c)]</text:p>
+            {% elif resolution.individualResolutionType == 'Records in Good Companies' %}
+                <text:p text:style-name="P37">That the Company keep the records required under section 189(1) of the Companies Act 1993 electronically, using the service provided by CataLex known as Good Companies.</text:p>
+            {% elif resolution.individualResolutionType == 'Agent for Company Changes' %}
+                <text:p text:style-name="P37">That {{ resolution.resolutionOptions.nameOfAuthorisedAgent }} be appointed or confirmed as the sole agent responsible for maintaining the share register under section 87(3) of the Companies Act 1993.</text:p>
+                
+                <text:p text:style-name="P37">That {{ resolution.resolutionOptions.nameOfAuthorisedAgent }} be appointed or confirmed as the board’s sole agent for submitting necessary changes or documents to the companies register and the Registrar, and that, unless {{ resolution.resolutionOptions.nameOfAuthorisedAgent }} is unwilling or unable to make any required submission in a timely manner, no other person be authorised to submit such changes or documents on behalf of the board.</text:p>
+            {% endif %}
+        </text:list-item>
+    {% endfor %}
+</text:list>
+
+<text:p text:style-name="P19">
+    The above resolution/Each of the above resolutions was approved as a
+    {% if resolutionOptions.resolutionType == 'Resolution at Board Meeting' %}
+        resolution of the Company’s board, by either being agreed to by all directors present or having a majority of the votes cast on it being in favour. [Companies Act 1993, s 160 and cl 5(4) of sch 3]
+    {% else %}
+        written resolution of all the directors of the Company who, as at the date of this document, were entitled to receive notice of a meeting of the Company’s board. The/Each resolution is as valid and effective as if it had been passed at a meeting of the board duly convened and held. [Companies Act 1993, s 160 and cl 7 of sch 3]
+    {% endif %}
+</text:p>
+
+{% include 'partials/notes.njs' %}
+
+{% if resolutionOptions.resolutionType == 'Resolution at Board Meeting' %}
+    <text:p text:style-name="P14">This minute is certified as true and correct by {{ resolutionOptions.chairperson.name }}, who chaired the board meeting.</text:p>
+    <text:p text:style-name="P14">Signed by {{ resolutionOptions.chairperson.name }} as chairperson:</text:p>
+
+    {% include 'partials/signature_line.njs' %}
+{% else %}
+    <text:p text:style-name="P14">A copy of this written resolution is to be entered in the minute book of board proceedings.</text:p>
+    <text:p text:style-name="P14">Signed by all the directors of the Company:</text:p>
+
+    {% include 'partials/signature_table.njs' %}
+{% endif %}
+
+{% endblock %}

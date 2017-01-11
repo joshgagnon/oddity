@@ -1,0 +1,7 @@
+{
+    "database": "company-info",
+    "host": "dbhost",
+    "user": "dbuser",
+    "password": "dbpass",
+    "server_port": 5670
+}
