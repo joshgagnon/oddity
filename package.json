@@ -1,17 +1,14 @@
 {
   "name": "company-info",
   "version": "0.0.1",
-  "description": "Catalex's Company Info Service",
+  "description": "Catalex's Templating Service",
   "engines": {
     "npm": "~3.5.2"
   },
   "main": "index.js",
-  "scripts": {
-    "test": "BLUEBIRD_WARNINGS=0 NODE_ENV=test _mocha --recursive tests --compilers js:babel-core/register --timeout 45000"
-  },
   "repository": {
     "type": "git",
-    "url": "git://github.com/joshgagnon/good-company.git"
+    "url": "https://github.com/paddymoran/convert_v2"
   },
   "author": "",
   "license": "ISC",
