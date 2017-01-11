@@ -1,6 +1,6 @@
-{% extends 'layouts/default.njs' %}
+{% extends 'layouts/default.njk' %}
 
-{% import 'partials/macros.njs' as macros %}
+{% import 'partials/macros.njk' as macros %}
 
 {% block body %}
 
@@ -54,18 +54,18 @@
     {% endif %}
 </text:p>
 
-{% include 'partials/notes.njs' %}
+{% include 'partials/notes.njk' %}
 
 {% if resolutionOptions.resolutionType == 'Resolution at Board Meeting' %}
     <text:p text:style-name="P14">This minute is certified as true and correct by {{ resolutionOptions.chairperson.name }}, who chaired the board meeting.</text:p>
     <text:p text:style-name="P14">Signed by {{ resolutionOptions.chairperson.name }} as chairperson:</text:p>
 
-    {% include 'partials/signature_line.njs' %}
+    {% include 'partials/signature_line.njk' %}
 {% else %}
     <text:p text:style-name="P14">A copy of this written resolution is to be entered in the minute book of board proceedings.</text:p>
     <text:p text:style-name="P14">Signed by all the directors of the Company:</text:p>
 
-    {% include 'partials/signature_table.njs' %}
+    {% include 'partials/signature_table.njk' %}
 {% endif %}
 
 {% endblock %}
