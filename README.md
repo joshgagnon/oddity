@@ -1,9 +1,17 @@
 # Convert Version 2
 
-Required:
+## Required
 
-pm2 to be installed globally
+pm2 installed globally
 
+## Startup
 npm install
+
 pm2 start server.js --name company_info -x -- config.json
-npm test
+
+# Working with templates
+
+## Nunjucks
+
+## Styling
+

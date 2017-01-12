@@ -10,25 +10,24 @@ app.use(bodyParser.json());
 
 nunjucks.configure('templates', { autoescape: true });
 
-const DEFAULT_BASE_DOCUMENT = 'base_documents/default.odt';
+// const DEFAULT_BASE_DOCUMENT = 'base_documents/default.odt';
+const DEFAULT_BASE_DOCUMENT = 'base_documents/edited.odt';
 
 module.exports = function(config) {
     const port = config.server_port || 3000;
 
-    app.get('/', function (request, response) {
+    app.listen(port, function () {
+        console.log('Node server running at localhost:' + port);
     });
 
-    app.get('/test', function (request, response) {
+    app.get('/', function (request, response) {
         const renderedContentXml = nunjucks.render('board_resolution.njk', testData);
+
         packZip(renderedContentXml).then((zip) => {
             response.set('Content-Type', 'application/zip')
             response.set('Content-Disposition', 'attachment; filename=file.zip');
             response.end(zip, 'binary');
         });
-    });
-
-    app.listen(port, function () {
-        console.log('Node server running at localhost:' + port);
     });
 }
 

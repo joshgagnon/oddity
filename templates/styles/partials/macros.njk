@@ -1,0 +1,39 @@
+{% macro common_list_level_attributes(level, display_levels) %}
+    text:level="{{ level }}"
+
+    {% if display_levels %}
+        text:display-levels="{{ level }}"
+    {% endif%}
+{% endmacro %}
+
+{% macro open_list_level(style, level, display_levels) %}
+    {% if style == 'bullet' %}
+        <text:list-level-style-bullet
+            text:bullet-char="•"
+            {{ common_list_level_attributes(level, display_levels) }}>
+    {% elif style == 'number' %}
+        <text:list-level-style-number
+            style:num-format="1"
+            style:num-suffix="."
+            {{ common_list_level_attributes(level, display_levels) }}>
+    {% elif style == 'lower_roman' %}
+        <text:list-level-style-number
+            style:num-format="i"
+            style:num-suffix="."
+            {{ common_list_level_attributes(level, display_levels) }}>
+    {% elif style == 'lower_alphabet' %}
+        <text:list-level-style-number
+            style:num-format="a"
+            style:num-prefix="("
+            style:num-suffix=")"
+            {{ common_list_level_attributes(level, display_levels) }}>
+    {% endif %}
+{% endmacro %}
+
+{% macro close_list_level(style) %}
+    {% if style == 'bullet' %}
+        </text:list-level-style-bullet>
+    {% else %}
+        </text:list-level-style-number>
+    {% endif %}
+{% endmacro %}
