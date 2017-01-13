@@ -1,0 +1,44 @@
+{
+    "company": {
+        "companyName": "CATALEX LIMITED",
+        "companyNumber": 366352
+    },
+    "notes": [
+        "one two three four",
+        "lorem ipsum"
+    ],
+    "resolution": {
+        "dateOfBoardMeeting": "2015-09-31"
+    },
+    "resolutionOptions": {
+        "chairperson": {
+            "name": "Testing Chairperson Name"
+        },
+        "dateOfMinute": "2015-10-08",
+        "resolutionType": "Resolution at Board Meeting"
+    },
+    "resolutions": [
+        {
+            "individualResolutionType": "Custom",
+            "resolutionOptions": {
+                "text": "testing testing testing one two three"
+            }
+        },
+        {
+            "individualResolutionType": "Change Company Name",
+            "resolutionOptions": {
+                "effectiveDate": "2016-05-04",
+                "newCompanyName": "NEW COMPANY NAME"
+            }
+        },
+        {
+            "individualResolutionType": "Records in Good Companies"
+        },
+        {
+            "individualResolutionType": "Agent for Company Changes",
+            "resolutionOptions": {
+                "nameOfAuthorisedAgent": "Paddy Moran"
+            }
+        }
+    ]
+}

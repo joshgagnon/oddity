@@ -12,7 +12,7 @@
 
     {{ components.title('Board Resolution') }}
     {{ components.company_info_subtitle(company.companyName, company.companyNumber) }}
-    {{ components.date_subtitle(documentDate) }}
+    {{ components.date_subtitle(documentDate | date) }}
 
     {{ components.line_break() }}
 

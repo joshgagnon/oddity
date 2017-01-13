@@ -4,13 +4,22 @@ var Promise = require('bluebird');
 const fs = Promise.promisifyAll(require("fs"));
 const nunjucks = require('nunjucks')
 var JSZip = require("jszip");
+const moment = require('moment');
 
 var app = express();
 app.use(bodyParser.json());
 
-nunjucks.configure('templates', { autoescape: true });
+var env = nunjucks.configure('templates', { autoescape: true });
+
+env.addFilter('date', function(date) {
+    return moment(date, 'YYYY-MM-DD').format('D MMM YYYY');
+});
 
 const DEFAULT_BASE_DOCUMENT = 'base_documents/default.odt';
+
+const tempaltes = [
+    'board_resolution',
+];
 
 module.exports = function(config) {
     const port = config.server_port || 3000;
@@ -20,7 +29,8 @@ module.exports = function(config) {
     });
 
     app.get('/', function (request, response) {
-        const renderedContentXml = nunjucks.render('board_resolution.njk', testData);
+        console.log(request.query);
+        const renderedContentXml = nunjucks.render('board_resolution.njk', request.body);
 
         packZip(renderedContentXml).then((zip) => {
             response.set('Content-Type', 'application/zip')
@@ -41,43 +51,3 @@ function packZip(contentXml) {
         })
         .catch(error => console.log(error));
 }
-
-const testData = {
-    company: {
-        companyName: "CATALEX LIMITED",
-        companyNumber: 366352
-    },
-    resolutionOptions: {
-        resolutionType: 'Resolution at Board Meeting',
-        dateOfMinute: '2015-10-08',
-        chairperson: {
-            name: 'Testing Chairperson Name'
-        }
-    },
-    resolution: {
-        dateOfBoardMeeting: '2015-09-31'
-    },
-    resolutions: [{
-        individualResolutionType: 'Custom',
-        resolutionOptions: {
-            text: 'testing testing testing one two three'
-        }
-    },{
-        individualResolutionType: 'Change Company Name',
-        resolutionOptions: {
-            newCompanyName: 'NEW COMPANY NAME',
-            effectiveDate: '2016-05-04'
-        }
-    },{
-        individualResolutionType: 'Records in Good Companies'
-    },{
-        individualResolutionType: 'Agent for Company Changes',
-        resolutionOptions: {
-            nameOfAuthorisedAgent: 'Paddy Moran'
-        }
-    }],
-    notes: [
-        'one two three four',
-        'lorem ipsum'
-    ]
-};
