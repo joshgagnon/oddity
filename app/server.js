@@ -10,8 +10,7 @@ app.use(bodyParser.json());
 
 nunjucks.configure('templates', { autoescape: true });
 
-// const DEFAULT_BASE_DOCUMENT = 'base_documents/default.odt';
-const DEFAULT_BASE_DOCUMENT = 'base_documents/edited.odt';
+const DEFAULT_BASE_DOCUMENT = 'base_documents/default.odt';
 
 module.exports = function(config) {
     const port = config.server_port || 3000;

@@ -1,0 +1,63 @@
+{% macro title(text) %}
+    <text:h text:style-name="heading_1">{{ text }}</text:h>
+{% endmacro %}
+
+{% macro company_info_subtitle(companyName, companyNumber) %}
+    <text:h text:style-name="heading_2">{{ companyName }} ({{ companyNumber }}) (“Company”)</text:h>
+{% endmacro %}
+
+
+{% macro date_subtitle(text) %}
+    <text:h text:style-name="heading_3">{{ text }}</text:h>
+{% endmacro %}
+
+{% macro line_break() %}
+    <text:p text:style-name="text_normal" />
+{% endmacro %}
+
+{% macro notes(notesList) %}
+    {% if notesList %}
+        <text:p text:style-name="text_normal">It is noted that:</text:p>
+
+        <text:list text:style-name="normal_list">
+            {% for note in notesList %}
+                <text:list-item>
+                    <text:p text:style-name="text_normal">{{ note }}</text:p>
+                </text:list-item>
+            {% endfor %}
+        </text:list>
+    {% endif %}
+{% endmacro %}
+
+{% macro signature_line() %}
+    <text:p text:style-name="text_normal" />
+    <text:p text:style-name="signature_line" />
+{% endmacro %}
+
+{% macro signature_table(names) %}
+    {% for batchedNames in names | batch(2) %}
+        <table:table table:name="Signature Table" table:style-name="signature_table">
+
+            <table:table-column table:number-columns-repeated="2" table:style-name="signature_table_column"/>
+
+            <table:table-row table:style-name="signature_table_row">
+                <table:table-cell office:value-type="string" table:style-name="signature_table_cell">
+                    <text:p text:style-name="text_normal">Signed by {{ batchedNames[0] }}</text:p>
+
+                    <text:p text:style-name="text_normal" />
+                    <text:p text:style-name="table_signature_line" />
+                </table:table-cell>
+
+                {% if batchedNames[1] %}
+                    <table:table-cell office:value-type="string" table:style-name="signature_table_cell">
+                        <text:p text:style-name="text_normal">Signed by  {{ batchedNames[1] }}</text:p>
+
+                        <text:p text:style-name="text_normal" />
+                        <text:p text:style-name="table_signature_line" />
+                    </table:table-cell>
+                {% endif %}
+            </table:table-row>
+
+        </table:table>
+    {% endfor %}
+{% endmacro %}

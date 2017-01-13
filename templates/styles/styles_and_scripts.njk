@@ -1,3 +1,5 @@
+{% import 'styles/partials/macros.njk' as macros %}
+
 <office:font-face-decls>
     <style:font-face style:font-charset="x-symbol" style:name="OpenSymbol" svg:font-family="OpenSymbol"/>
     <style:font-face style:name="Arial" svg:font-family="Arial, sans-serif"/>
@@ -77,40 +79,30 @@
     <!--
     **  Tables
     -->
-    <style:style style:family="table" style:name="Table1">
-        <style:table-properties style:width="17cm" table:align="margins"/>
+    <style:style style:family="table" style:name="signature_table">
+        <style:table-properties style:shadow="none" style:width="17cm" table:align="margins"/>
     </style:style>
-    <style:style style:family="table-column" style:name="Table1.A">
+    <style:style style:family="table-column" style:name="signature_table_column">
         <style:table-column-properties style:column-width="8.5cm" style:rel-column-width="32767*"/>
     </style:style>
-    <style:style style:family="table-column" style:name="Table1.B">
-        <style:table-column-properties style:column-width="8.5cm" style:rel-column-width="32768*"/>
+    <style:style style:family="table-row" style:name="signature_table_row">
+        <style:table-row-properties fo:keep-together="always"/>
     </style:style>
-    <style:style style:family="table-cell" style:name="Table1.A1">
+    <style:style style:family="table-cell" style:name="signature_table_cell">
         <style:table-cell-properties fo:border="none" fo:padding="0.097cm"/>
+    </style:style>
+
+    {# This is different to a normal signature line, for some unknown reasons :) (Because it's in a table) #}
+    <style:style style:family="paragraph" style:name="table_signature_line" style:parent-style-name="horizontal_line">
+        <style:paragraph-properties fo:margin-left="0cm" fo:margin-right="2.5cm" fo:text-indent="0cm" style:auto-text-indent="false"/>
     </style:style>
 
     <!--
     **  Lists
     -->
-    <text:list-style style:name="list_basic">
-        {% import 'styles/partials/macros.njk' as macros %}
-        {% set list_format = ['bullet', 'number', 'lower_roman', 'lower_alphabet'] %}
-        {% set display_list_levels = true %}
-        {% set initial_margin = 0.635 %}
-        {% set margin_increment = 0.635 %}
+    {% set normal_list = ['number', 'lower_alphabet', 'lower_roman', 'upper_alphabet', 'number', 'number', 'number', 'number', 'number', 'number'] %}
+    {% set legal_list = ['number', 'number', 'number', 'number', 'number', 'number', 'number', 'number', 'number', 'number'] %}
 
-        {% for level_style in list_format %}
-            {{ macros.open_list_level(level_style, loop.index, display_list_levels) }}
-                <style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
-                    <style:list-level-label-alignment
-                        fo:margin-left="{{ initial_margin + (margin_increment * loop.index) }}cm"
-                        fo:text-indent="-{{ margin_increment }}cm"
-                        text:label-followed-by="listtab"
-                        text:list-tab-stop-position="{{ initial_margin + (margin_increment * loop.index) }}cm" />
-
-                </style:list-level-properties>
-            {{ macros.close_list_level(level_style) }}
-        {% endfor %}
-    </text:list-style>
+    {{ macros.list('normal_list', normal_list, false) }}
+    {{ macros.list('legal_list', legal_list, true) }}
 </office:automatic-styles>

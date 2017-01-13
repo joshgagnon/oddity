@@ -27,6 +27,11 @@
             style:num-prefix="("
             style:num-suffix=")"
             {{ common_list_level_attributes(level, display_levels) }}>
+    {% elif style == 'upper_alphabet' %}
+        <text:list-level-style-number
+            style:num-format="A"
+            style:num-suffix="."
+            {{ common_list_level_attributes(level, display_levels) }}>
     {% endif %}
 {% endmacro %}
 
@@ -36,4 +41,24 @@
     {% else %}
         </text:list-level-style-number>
     {% endif %}
+{% endmacro %}
+
+{% macro list(name, list_format, display_list_levels) %}
+    {% set initial_margin = 0.635 %}
+    {% set margin_increment = 0.635 %}
+
+    <text:list-style style:name="{{ name }}">
+        {% for level_style in list_format %}
+            {{ open_list_level(level_style, loop.index, display_list_levels) }}
+                <style:list-level-properties text:list-level-position-and-space-mode="label-alignment">
+                    <style:list-level-label-alignment
+                        fo:margin-left="{{ initial_margin + (margin_increment * loop.index) }}cm"
+                        fo:text-indent="-{{ initial_margin }}cm"
+                        text:label-followed-by="listtab"
+                        text:list-tab-stop-position="{{ initial_margin + (margin_increment * loop.index) }}cm" />
+
+                </style:list-level-properties>
+            {{ close_list_level(level_style) }}
+        {% endfor %}
+    </text:list-style>
 {% endmacro %}
