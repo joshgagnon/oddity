@@ -86,7 +86,7 @@ module.exports = function(config) {
             response.status(400);
             response.end('Error: unknown template');
         } else {
-            const renderedContentXml = nunjucks.render(request.query.template, request.body);
+            const renderedContentXml = nunjucks.render(request.query.template + '.njk', request.body);
 
             packZip(renderedContentXml).then((zip) => {
                 response.set('Content-Type', 'application/zip');
