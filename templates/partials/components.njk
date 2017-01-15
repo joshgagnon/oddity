@@ -33,6 +33,16 @@
     <text:p text:style-name="signature_line" />
 {% endmacro %}
 
+{% macro link(text, link) %}
+    <text:a
+        text:style-name="internet_link"
+        xlink:href="{{ link }}"
+        xlink:type="simple">
+        
+        {{ text }}
+    </text:a>
+{% endmacro %}
+
 {% macro signature_table(names) %}
     {% for batchedNames in names | batch(2) %}
         <table:table table:name="Signature Table" table:style-name="signature_table">
