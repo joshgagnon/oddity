@@ -24,7 +24,7 @@
         {% endif %}
     </text:p>
 
-    <text:list text:style-name="legal_list">
+    <text:list text:style-name="normal_list">
         {% for resolution in resolutions %}
             <text:list-item>
                 {% if resolution.individualResolutionType == 'Custom' %}
@@ -63,7 +63,7 @@
         <text:p text:style-name="text_normal">A copy of this written resolution is to be entered in the minute book of board proceedings.</text:p>
         <text:p text:style-name="text_normal">Signed by all the directors of the Company:</text:p>
 
-        {{ components.signature_table(names) }}
+        {{ components.signature_table(resolutionOptions.directors) }}
     {% endif %}
 
 {% endblock %}
