@@ -66,8 +66,11 @@ env.addFilter('exists', function(list, attribute, value) {
 
 const DEFAULT_BASE_DOCUMENT = 'base_documents/default.odt';
 
-const tempaltes = [
+const templates = [
     'board_resolution',
+    'directors_certificate',
+    'notice_of_meeting',
+    'resignation_of_director'
 ];
 
 module.exports = function(config) {
@@ -78,14 +81,19 @@ module.exports = function(config) {
     });
 
     app.get('/', function (request, response) {
-        console.log(request.query);
-        const renderedContentXml = nunjucks.render('board_resolution.njk', request.body);
+        if (templates.indexOf(request.query.template) == -1) {
+            response.set('Content-Type', 'application/json');
+            response.status(400);
+            response.end('Error: unknown template');
+        } else {
+            const renderedContentXml = nunjucks.render(request.query.template, request.body);
 
-        packZip(renderedContentXml).then((zip) => {
-            response.set('Content-Type', 'application/zip')
-            response.set('Content-Disposition', 'attachment; filename=file.zip');
-            response.end(zip, 'binary');
-        });
+            packZip(renderedContentXml).then((zip) => {
+                response.set('Content-Type', 'application/zip');
+                response.set('Content-Disposition', 'attachment; filename=file.zip');
+                response.end(zip, 'binary');
+            });
+        }
     });
 }
 
