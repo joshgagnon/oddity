@@ -15,6 +15,14 @@ env.addFilter('date', function(date) {
     return moment(date, 'YYYY-MM-DD').format('D MMM YYYY');
 });
 
+env.addFilter('timestamp_to_date', function(date) {
+    return moment(date, 'YYYY-MM-DD').format('D MMM YYYY');
+});
+
+env.addFilter('timestamp_to_time', function(date) {
+    return moment(date, 'YYYY-MM-DD').format('D MMM YYYY');
+});
+
 // Take a list of items and format them in a string
 // item one
 // item one and item two
@@ -32,10 +40,10 @@ env.addFilter('join_and', function(items, attribute) {
 
         if (index == 0) {
             result = item;
-        } if ((index - 1) != items.length) {
-            // Last item needs an 'and' before it
+        } else if (index < items.length - 1) {
             result += ', ' + item;
         } else {
+            // Last item needs an 'and' before it
             result += ', and ' + item;
         }
     });
@@ -44,8 +52,8 @@ env.addFilter('join_and', function(items, attribute) {
 });
 
 env.addFilter('exists', function(list, attribute, value) {
-    for (index = 0; index < list.length; index++) {
-        if (item[index][attribute] && item[index][attribute] == value) {
+    for (let index = 0; index < list.length; index++) {
+        if (list[index][attribute] && list[index][attribute] == value) {
             return true;
         }
     }
