@@ -1,0 +1,92 @@
+{% extends 'layouts/default.njk' %}
+
+{% import 'partials/components.njk' as components %}
+
+{% block body %}
+
+    {{ components.title("Entitled Persons' Agreement") }}
+    {{ components.company_info_subtitle(company.companyName, company.companyNumber) }}
+    {{ components.date_subtitle(agreementOptions.dateOfAgreement | date) }}
+
+    {{ components.line_break() }}
+
+    <text:p text:style-name="text_normal">
+        This document is a written agreement or concurrence of all the entitled persons of the Company for the purposes of section 107 of the Companies Act 1993 (Act). The persons named below and signing this document, being all the ‘entitled persons’ of the Company as that term is defined in section 2(1) of the Act, hereby agree or concur to the board of the Company
+    </text:p>
+
+    <text:list text:style-name="normal_list">
+        {% for power in agreementOptions.powersBeingExercised %}
+            <text:list-item>
+                {% if power.power == 'Dividends' %}
+                    authorising dividends otherwise than in accordance with section 53 of the Act{% if agreementOptions.agreementType == 'Particular Exercise of Power' %}, as follows, {{ power.details }}{% endif %};
+                {% elif power.power == 'Discount Schemes' %}
+                    approving discount schemes otherwise than in accordance with section 55 of the Act{% if agreementOptions.agreementType == 'Particular Exercise of Power' %}, as follows, {{ power.details }}{% endif %};
+                {% elif power.power == 'Share Acquisitions' %}
+                    arranging the acquisition of the Company’s own shares otherwise than in accordance with sections 59 to 65 of the Act{% if agreementOptions.agreementType == 'Particular Exercise of Power' %}, as follows, {{ power.details }}{% endif %};
+                {% elif power.power == 'Share Redemptions' %}
+                    arranging the redemption of redeemable shares issued by the Company otherwise than in accordance with sections 69 to 72 of the Act{% if agreementOptions.agreementType == 'Particular Exercise of Power' %}, as follows, {{ power.details }}{% endif %};
+                {% elif power.power == 'Financial Assistance' %}
+                    arranging for the Company to give financial assistance for the purpose of, or in connection with, the purchase of shares otherwise than in accordance with sections 76 to 80 of the Act{% if agreementOptions.agreementType == 'Particular Exercise of Power' %}, as follows, {{ power.details }}{% endif %};
+                {% elif power.power == 'Director Remuneration and Benefits' %}
+                    authorising any of the matters referred to in section 161(1) of the Act, including: 
+                        <text:list-item>the payment of remuneration or the provision of other benefits by the Company to a director for services as a director or in any other capacity;</text:list-item>
+                        <text:list-item>the payment by the Company to a director or former director of compensation for loss of office;</text:list-item>
+                        <text:list-item>the making of loans by the Company to a director;</text:list-item>
+                        <text:list-item>the giving of guarantees by the Company for debts incurred by a director; and</text:list-item>
+                        <text:list-item>the entering into of a contract to do any of the things set out in paragraphs (a), (b), (c), and (d),</text:list-item>
+                    otherwise than in accordance with the requirements of section 161 of the Act{% if agreementOptions.agreementType == 'Particular Exercise of Power' %}, as follows, {{ power.details }}{% endif %};
+                {% elif power.power == 'Share Issues' %}
+                    issuing shares in the Company otherwise than in accordance with section 42, section 44, or section 45 of the Act{% if agreementOptions.agreementType == 'Particular Exercise of Power' %}, as follows, {{ power.details  }}{% endif %};
+                {% elif power.power == 'Interested Directors' %}
+                    arranging for the Company to enter into a transaction in which a director is interested, such that nothing in sections 140 and 141 of the Act will apply in relation to the transaction{% if agreementOptions.agreementType == 'Particular Exercise of Power' %}, as follows, {{ power.details }}{% endif %};
+                {% endif %}
+            </text:list-item>
+        {% endfor %}
+    </text:list>
+
+    {% if agreementOptions.agreementType == 'Particular Exercise of Power' %}
+        <text:p text:style-name="text_normal">
+            This is a separate agreement to, or concurrence in, the particular
+
+            {% if agreementOptions.powersBeingExercised | length == 1 %}
+                exercise of the power
+            {% else %}
+                exercises of the powers
+            {% endif %}
+
+            referred to above for the purposes of section 107(5(a) of the Act.
+        </text:p>
+    
+        <text:p text:style-name="text_normal">
+            This is an agreement to, or concurrence in, the {% if agreementOptions.powersBeingExercised | length == 1 %}exercise of the power{% else %}exercises of the powers{% endif %} referred to above generally or from time to time for the purposes of section 107(5)(b) of the Act. As such, an entitled person may at any time, by notice in writing to the Company, withdraw from this agreement or concurrence as set out in section 107(6) of the Act.
+        </text:p>
+
+        <text:p text:style-name="text_normal">
+            The board of the Company will give written notice to all entitled persons of the Company within 10 working days of exercising a power referred to in this agreement/concurrence. The notice must give details of the exercise of the power.
+        </text:p>
+
+        <text:p text:style-name="text_normal">Signed by {{ resolutionOptions.chairperson.name }} as chairperson:</text:p>
+
+        
+    {% else %}
+        <text:p text:style-name="text_normal">The shareholders signing {% if resolutions|length > 1 %}these resolutions {% else %} this resolution {% endif %}in lieu of a shareholder meeting:</text:p>
+        
+        <text:list text:style-name="normal_list">
+            <text:list-item>
+                are not less than 75%, or such other percentage as the constitution may require for passing a special resolution, of the shareholders who would be entitled to vote on the resolution at a meeting of the Company’s shareholders;
+            </text:list-item>
+            <text:list-item>
+                together hold not less than 75% or, if a higher percentage is required by the constitution, that higher percentage, of the votes entitled to be cast on the resolution Companies Act 1993, s 122; and
+            </text:list-item>
+            <text:list-item>
+                confirm that, to the extent this resolution affects the rights attached to shares in terms of section 117(1) of the Companies Act 1993, it has been approved by special resolution of each interest group.
+            </text:list-item>
+        </text:list>
+
+        <text:p text:style-name="text_normal">Signed by all the entitled persons of the Company:</text:p>
+
+        {{ components.signature_table(resolutionOptions.shareholders | flatten('name')) }}
+    {% endif %}
+
+
+{% endblock %}

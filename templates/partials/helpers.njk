@@ -1,0 +1,7 @@
+{% macro plural_if_needed(list, singular, plural) %}
+    {% if list | length == 1 %}
+        {{ singular }}
+    {% else %}
+        {{ plural }}
+    {% endif %}
+{% endif %}

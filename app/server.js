@@ -55,7 +55,7 @@ env.addFilter('flatten', function(list, attribute) {
 });
 
 env.addFilter('exists', function(list, attribute, value) {
-    for (let index = 0; index < list.length; index++) {
+    for (index = 0; index < list.length; index++) {
         if (item[index][attribute] && item[index][attribute] == value) {
             return true;
         }
@@ -69,8 +69,11 @@ const DEFAULT_BASE_DOCUMENT = 'base_documents/default.odt';
 const templates = [
     'board_resolution',
     'directors_certificate',
+    'entitled_persons_agreement',
     'notice_of_meeting',
-    'resignation_of_director'
+    'ordinary_resolution_of_shareholders',
+    'resignation_of_director',
+    'special_resolution_of_shareholders'
 ];
 
 module.exports = function(config) {

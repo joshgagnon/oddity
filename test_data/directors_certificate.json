@@ -1,0 +1,28 @@
+{
+    "company": {
+        "companyName": "CATALEX LIMITED",
+        "companyNumber": 366352
+    },
+    "certificateOptions": {
+        "dateOfCertificate": "1999-09-09"
+    },
+    "certifications": [
+        "Testing testing testing",
+        "one two three",
+        "And another :)"
+    ],
+    "notes": [
+        "one two three four",
+        "lorem ipsum"
+    ],
+    "resolution": {
+        "dateOfBoardMeeting": "2015-09-31"
+    },
+    "directors": [{
+        "name": "Josh",
+    },{
+        "name": "Steve"
+    },{
+        "name": "Jenny"
+    }]
+}

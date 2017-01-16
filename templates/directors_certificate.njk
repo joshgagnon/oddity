@@ -1,0 +1,29 @@
+{% extends 'layouts/default.njk' %}
+
+{% import 'partials/components.njk' as components %}
+
+{% block body %}
+
+    {{ components.title('Director’s Certificate') }}
+    {{ components.company_info_subtitle(company.companyName, company.companyNumber) }}
+    {{ components.date_subtitle(certificateOptions.dateOfCertificate | date) }}
+
+    {{ components.line_break() }}
+
+    <text:p text:style-name="text_normal">
+        I/we, the director/directors of the Company named below, hereby certify as follows:
+    </text:p>
+
+    <text:list text:style-name="normal_list">
+        {% for certification in certifications %} 
+            <text:list-item>
+                {{ certification.text }}
+            </text:list-item>
+        {% endfor %}
+    </text:list>
+
+    {{ components.notes(notes) }}
+    
+    {{ components.signature_table(directors, 'name') }}
+
+{% endblock %}

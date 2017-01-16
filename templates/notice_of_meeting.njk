@@ -1,0 +1,74 @@
+{% extends 'layouts/default.njk' %}
+
+{% import 'partials/components.njk' as components %}
+
+{% block body %}
+
+    {{ components.title('Notice of ' + noticeOptions.meetingType) }}
+    {{ components.company_info_subtitle(company.companyName, company.companyNumber) }}
+    {{ components.date_subtitle(noticeOptions.dateOfNotice | date) }}
+
+    {{ components.line_break() }}
+
+    <text:p text:style-name="text_normal">
+        {% if noticeOptions.meetingType == 'Board Meeting' %}
+            To: {{  noticeOptions.meetingOptions.recipients | flatten('name') | join_and }}
+        {% else %}
+            To: {{  noticeOptions.meetingOptions.shareholders | flatten('name') | join_and }}
+        {% endif %}
+    </text:p>
+
+    <text:p text:style-name="text_normal">
+        This is a notice that on {{ noticeOptions.meetingDateTime }} at {{ noticeOptions.meetingDateTime }}, 
+
+        {% if noticeOptions.meetingType == 'Board Meeting' %}
+            a meeting of the board of directors
+        {% elif noticeOptions.meetingType == 'Annual Meeting of Shareholders' %}
+            the annual general meeting of the shareholders
+        {% else %}
+            a special meeting of the shareholders
+        {% endif %}
+
+        of the Company will be held at {{ noticeOptions.locationOfMeeting }}.
+    </text:p>
+
+    
+    {% if noticeOptions.meetingType == 'Board Meeting' %}
+        <text:p text:style-name="text_normal">The following matters will be discussed at the board meeting [Companies Act 1993, sch 3, cl 2(2)]:</text:p>
+        
+        <text:list text:style-name="normal_list">
+            {% for matter in noticeOptions.meetingOptions.matters %}
+                <text:list-item>{{ matter.text }}</text:list-item>
+            {% endfor %}
+        </text:list>
+    {% else %}
+        <text:p text:style-name="text_normal">The following items of business will be transacted at the meeting [Companies Act 1993, sch 1, cl 2(2)(a)]:</text:p>
+        
+        <text:list text:style-name="normal_list">
+            {% for item in noticeOptions.meetingOptions.itemsOfBusiness %} 
+                <text:list-item>{{ item.text }}</text:list-item>
+            {% endfor %}
+        </text:list>
+
+        {% if  noticeOptions.meetingOptions.specialResolutions | length >= 1 %}
+            <text:p text:style-name="text_normal">The following special resolutions will be submitted to the meeting [Companies Act 1993, sch 1, cl 2(2)(b)]: </text:p>
+            
+            <text:list text:style-name="normal_list">
+                {% for resolution in noticeOptions.meetingOptions.specialResolutions %}
+                    <text:list-item>{{ resolution.text }}</text:list-item>
+                {% endfor %}
+            </text:list>
+        {% endif %}
+
+        {% if (noticeOptions.meetingOptions.specialResolutions | exists('alterConstitutionOrMajorTransaction', 'Yes')) %}
+            <text:p text:style-name="text_normal">Shareholders are reminded of the statutory right to require the Company to purchase their shares provided by section 110 of the Companies Act 1993.</text:p>
+        {% endif %}
+    {% endif %}
+
+    {{ components.notes(notes) }}
+
+    <text:p text:style-name="text_normal">This notice is given by {{ noticeOptions.personGivingNotice }}</text:p>
+
+    {{ components.signature_line() }}
+
+{% endblock %}

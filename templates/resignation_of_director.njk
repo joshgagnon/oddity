@@ -1,0 +1,44 @@
+{% extends 'layouts/default.njk' %}
+
+{% import 'partials/components.njk' as components %}
+
+{% block body %}
+
+    {{ components.title('Resignation of Director') }}
+    {{ components.company_info_subtitle(company.companyName, company.companyNumber) }}
+    {{ components.date_subtitle(resignationOptions.dateOfResignation | date) }}
+
+    {{ components.line_break() }}
+
+    <text:p text:style-name="text_normal">
+        To: The Company, {{ addressForService }}.
+    </text:p>
+
+    <text:p text:style-name="text_normal">
+        I, {{ resignationOptions.resigningDirector.name }}, hereby resign as a director of the Company, in accordance with section 157(2) of the Companies Act 1993 {% if resignationOptions.companyHasConstitution == 'Company has Constitution' %} and the Company’s constitution {% endif %}. My resignation {% if resignationOptions.effective == 'Effective Immediately' %} is effective immediately {% else %} will be effective on {{ resignationOptions.effectiveDate }}{% endif %}.
+    </text:p>
+
+    <text:p text:style-name="text_normal">
+        I confirm that{% if resignationOptions.effective != 'Effective Immediately' %}, as at {{ resignationOptions.effectiveDate }}{% endif %}:
+    </text:p>
+
+    <text:list text:style-name="normal_list">
+        <text:list-item>
+            no money is owing to me by the Company, whether by way of fees, salary, expenses, or otherwise;
+        </text:list-item>
+        <text:list-item>
+            I do not have any claim for compensation or damages against the Company for loss of office or otherwise, or, if I do have such a claim, then I waive any right I may have to pursue the claim against the Company; and
+        </text:list-item>
+        <text:list-item>
+            notwithstanding my resignation, I will remain liable under the provisions of the Companies Act 1993 that impose liability on directors in relation to acts, omissions, and decisions made while I was a director of the Company.
+        </text:list-item>
+    </text:list>
+
+    {{ components.notes(notes) }}
+    
+    <text:p text:style-name="text_normal">Signed by {{ resignationOptions.resigningDirector.name }}</text:p>
+
+    {{ components.signature_line() }}
+
+{% endblock %}
+
