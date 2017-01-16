@@ -12,9 +12,9 @@
 
     <text:p text:style-name="text_normal">
         {% if noticeOptions.meetingType == 'Board Meeting' %}
-            To: {{  noticeOptions.meetingOptions.recipients | flatten('name') | join_and }}
+            To: {{  noticeOptions.meetingOptions.recipients | join_and('name') }}
         {% else %}
-            To: {{  noticeOptions.meetingOptions.shareholders | flatten('name') | join_and }}
+            To: {{  noticeOptions.meetingOptions.shareholders | join_and('name') }}
         {% endif %}
     </text:p>
 

@@ -33,7 +33,7 @@
                 {% elif resolution.resolutionType == 'Approve Amalgamation' %}
                     That the attached amalgamation proposal be approved. Companies Act 1993, ss 106(1)(d) and 241(2)(a).
                 {% elif resolution.resolutionType == 'Put Company into Liquidation' %}
-                     That the company be put into liquidation by appointing {{ resolution.liquidators | flatten('name') | join_and }}. Companies Act 1993, ss 106(1)(c) and 221(5)].
+                     That the company be put into liquidation by appointing {{ resolution.liquidators | join_and('name') }}. Companies Act 1993, ss 106(1)(c) and 221(5)].
                 {% elif resolution.resolutionType == 'Custom' %}
                     {{ resolution.text }}
                 {% endif %}

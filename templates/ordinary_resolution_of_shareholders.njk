@@ -31,7 +31,7 @@
                     That {{ resolution.director.name }} be appointed a director of the Company with effect from {{ resolution.date }}. Companies Act 1993, ss 153(2).
                 {% endif %}
                 {% if resolution.resolutionType == 'Appoint Directors' %}
-                    That {{ resolution.directors | flatten('name') | join_and('director') }} be appointed a directors of the Company with effect from {{ resolution.date }}. Prior to this resolution being passed, a separate resolution that the appointment of the directors be voted on in a single resolution was passed. Alternatively, the votes were taken by ballet or poll. Companies Act 1993, ss 153(2) and 155.
+                    That {{ resolution.directors | join_and('name') }} be appointed a directors of the Company with effect from {{ resolution.date }}. Prior to this resolution being passed, a separate resolution that the appointment of the directors be voted on in a single resolution was passed. Alternatively, the votes were taken by ballet or poll. Companies Act 1993, ss 153(2) and 155.
                 {% endif %}
                 {% if resolution.resolutionType == 'Remove Director' %}
                     That {{ resolution.director.name }} be removed from office as a director of the Company with effect from {{ resolution.date }}. The shareholders’ meeting was called for the purpose of, or for purposes that include, removing the director, as stated in the notice of meeting. Companies Act 1993, ss 156 and 157(1)(b).
