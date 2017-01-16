@@ -85,7 +85,7 @@
 
         <text:p text:style-name="text_normal">Signed by all the entitled persons of the Company:</text:p>
 
-        {{ components.signature_table(resolutionOptions.shareholders | flatten('name')) }}
+        {{ components.signature_table(resolutionOptions.shareholders, 'name') }}
     {% endif %}
 
 

@@ -7,9 +7,9 @@
         "dateOfCertificate": "1999-09-09"
     },
     "certifications": [
-        "Testing testing testing",
-        "one two three",
-        "And another :)"
+        {"text": "Testing testing testing"},
+        {"text": "one two three"},
+        {"text": "And another :)"}
     ],
     "notes": [
         "one two three four",
@@ -19,7 +19,7 @@
         "dateOfBoardMeeting": "2015-09-31"
     },
     "directors": [{
-        "name": "Josh",
+        "name": "Josh"
     },{
         "name": "Steve"
     },{

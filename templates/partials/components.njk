@@ -53,9 +53,9 @@
                 <table:table-cell office:value-type="string" table:style-name="signature_table_cell">
 
                     {% if (name_attribute) %}
-                        <text:p text:style-name="text_normal">Signed by {{ batchedPeople[0] }}</text:p>
-                    {% else %}
                         <text:p text:style-name="text_normal">Signed by {{ batchedPeople[0][name_attribute] }}</text:p>
+                    {% else %}
+                        <text:p text:style-name="text_normal">Signed by {{ batchedPeople[0] }}</text:p>
                     {% endif %}
 
                     <text:p text:style-name="text_normal" />
@@ -66,9 +66,9 @@
                     <table:table-cell office:value-type="string" table:style-name="signature_table_cell">
 
                         {% if (name_attribute) %}
-                            <text:p text:style-name="text_normal">Signed by {{ batchedPeople[1] }}</text:p>
-                        {% else %}
                             <text:p text:style-name="text_normal">Signed by {{ batchedPeople[1][name_attribute] }}</text:p>
+                        {% else %}
+                            <text:p text:style-name="text_normal">Signed by {{ batchedPeople[1] }}</text:p>
                         {% endif %}
 
                         <text:p text:style-name="text_normal" />

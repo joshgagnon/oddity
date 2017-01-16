@@ -63,7 +63,7 @@
         <text:p text:style-name="text_normal">A copy of this written resolution is to be entered in the minute book of board proceedings.</text:p>
         <text:p text:style-name="text_normal">Signed by all the directors of the Company:</text:p>
 
-        {{ components.signature_table(resolutionOptions.directors) }}
+        {{ components.signature_table(resolutionOptions.directors, 'name') }}
     {% endif %}
 
 {% endblock %}

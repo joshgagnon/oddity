@@ -17,7 +17,7 @@
     <text:list text:style-name="normal_list">
         {% for certification in certifications %} 
             <text:list-item>
-                {{ certification.text }}
+                <text:p text:style-name="text_normal">{{ certification.text }}</text:p>
             </text:list-item>
         {% endfor %}
     </text:list>

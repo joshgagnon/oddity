@@ -83,7 +83,7 @@
             </text:list-item>
         </text:list>
 
-        {{ components.signature_table(resolutionOptions.shareholders | flatten('name')) }}
+        {{ components.signature_table(resolutionOptions.shareholders, 'name') }}
     {% endif %}
 
 {% endblock %}
