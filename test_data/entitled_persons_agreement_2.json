@@ -1,0 +1,31 @@
+{
+    "company": {
+        "companyName": "CATALEX LIMITED",
+        "companyNumber": 366352
+    },
+    "agreementOptions": {
+        "dateOfAgreement": "1999-09-09",
+        "agreementType": "General Exercise of Power",
+        "powersBeingExercised": [
+            {"power": "Dividends"},
+            {"power": "Discount Schemes"},
+            {"power": "Share Acquisitions"},
+            {"power": "Share Redemptions"},
+            {"power": "Financial Assistance"},
+            {"power": "Director Remuneration and Benefits"},
+            {"power": "Share Issues"},
+            {"power": "Interested Directors"}
+        ],
+        "entitledParties": [
+            {"name": "Simon"},
+            {"name": "Emma"},
+            {"name": "Nigel"},
+            {"name": "Daniel"},
+            {"name": "Nick"},
+            {"name": "Ursula"},
+            {"name": "Dave"},
+            {"name": "Eve"},
+            {"name": "Sam"}
+        ]
+    }
+}
