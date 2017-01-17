@@ -19,7 +19,7 @@
     </text:p>
 
     <text:p text:style-name="text_normal">
-        This is a notice that on {{ noticeOptions.meetingDateTime }} at {{ noticeOptions.meetingDateTime }}, 
+        This is a notice that on {{ noticeOptions.meetingDateTime | timestamp_to_date }} at {{ noticeOptions.meetingDateTime | timestamp_to_time}}, 
 
         {% if noticeOptions.meetingType == 'Board Meeting' %}
             a meeting of the board of directors
@@ -38,7 +38,9 @@
         
         <text:list text:style-name="normal_list">
             {% for matter in noticeOptions.meetingOptions.matters %}
-                <text:list-item>{{ matter.text }}</text:list-item>
+                <text:list-item>
+                    <text:p text:style-name="text_normal">{{ matter.text }}</text:p>
+                </text:list-item>
             {% endfor %}
         </text:list>
     {% else %}
@@ -46,7 +48,9 @@
         
         <text:list text:style-name="normal_list">
             {% for item in noticeOptions.meetingOptions.itemsOfBusiness %} 
-                <text:list-item>{{ item.text }}</text:list-item>
+                <text:list-item>
+                    <text:p text:style-name="text_normal">{{ item.text }}</text:p>
+                </text:list-item>
             {% endfor %}
         </text:list>
 
@@ -55,7 +59,9 @@
             
             <text:list text:style-name="normal_list">
                 {% for resolution in noticeOptions.meetingOptions.specialResolutions %}
-                    <text:list-item>{{ resolution.text }}</text:list-item>
+                    <text:list-item>
+                        <text:p text:style-name="text_normal">{{ resolution.text }}</text:p>
+                    </text:list-item>
                 {% endfor %}
             </text:list>
         {% endif %}

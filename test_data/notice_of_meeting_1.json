@@ -1,0 +1,29 @@
+{
+    "company": {
+        "companyName": "CATALEX LIMITED",
+        "companyNumber": 366352
+    },
+    "noticeOptions": {
+        "dateOfNotice": "2005-01-01",
+        "meetingType": "Board Meeting",
+        "meetingDateTime": "Mon Jan 16 2017 16:48:58 GMT+1300 (NZDT)",
+        "locationOfMeeting": "over the bro",
+        "personGivingNotice": "Whoever wants to give notice",
+        "meetingOptions": {
+            "recipients": [
+                {"name": "John"},
+                {"name": "Jenny"},
+                {"name": "Jack"}
+            ],
+            "matters": [
+                {"text": "Testing one"},
+                {"text": "Testing two"},
+                {"text": "Testing three"}
+            ]
+        }
+    },
+    "notes": [
+        "one two three four",
+        "lorem ipsum"
+    ]
+}
