@@ -18,41 +18,43 @@
     <text:list text:style-name="normal_list">
         {% for power in agreementOptions.powersBeingExercised %}
             <text:list-item>
-                <text:p text:style-name="text_normal">
-                    {% if power.power == 'Dividends' %}
-                        authorising dividends otherwise than in accordance with section 53 of the Act{% if agreementOptions.agreementType == 'Particular Exercise of Power' %}, as follows, {{ power.details }}{% endif %};
-                    {% elif power.power == 'Discount Schemes' %}
-                        approving discount schemes otherwise than in accordance with section 55 of the Act{% if agreementOptions.agreementType == 'Particular Exercise of Power' %}, as follows, {{ power.details }}{% endif %};
-                    {% elif power.power == 'Share Acquisitions' %}
-                        arranging the acquisition of the Company’s own shares otherwise than in accordance with sections 59 to 65 of the Act{% if agreementOptions.agreementType == 'Particular Exercise of Power' %}, as follows, {{ power.details }}{% endif %};
-                    {% elif power.power == 'Share Redemptions' %}
-                        arranging the redemption of redeemable shares issued by the Company otherwise than in accordance with sections 69 to 72 of the Act{% if agreementOptions.agreementType == 'Particular Exercise of Power' %}, as follows, {{ power.details }}{% endif %};
-                    {% elif power.power == 'Financial Assistance' %}
-                        arranging for the Company to give financial assistance for the purpose of, or in connection with, the purchase of shares otherwise than in accordance with sections 76 to 80 of the Act{% if agreementOptions.agreementType == 'Particular Exercise of Power' %}, as follows, {{ power.details }}{% endif %};
-                    {% elif power.power == 'Director Remuneration and Benefits' %}
-                        authorising any of the matters referred to in section 161(1) of the Act, including:
-                            <text:list-item>
-                                <text:p text:style-name="text_normal">the payment of remuneration or the provision of other benefits by the Company to a director for services as a director or in any other capacity;</text:p>
-                            </text:list-item>
-                            <text:list-item>
-                                <text:p text:style-name="text_normal">the payment by the Company to a director or former director of compensation for loss of office;</text:p>
-                            </text:list-item>
-                            <text:list-item>
-                                <text:p text:style-name="text_normal">the making of loans by the Company to a director;</text:p>
-                            </text:list-item>
-                            <text:list-item>
-                                <text:p text:style-name="text_normal">the giving of guarantees by the Company for debts incurred by a director; and</text:p>
-                            </text:list-item>
-                            <text:list-item>
-                                <text:p text:style-name="text_normal">the entering into of a contract to do any of the things set out in paragraphs (a), (b), (c), and (d),<text:p text:style-name="text_normal">
-                            </text:list-item>
-                        <text:p text:style-name="text_normal">otherwise than in accordance with the requirements of section 161 of the Act{% if agreementOptions.agreementType == 'Particular Exercise of Power' %}, as follows, {{ power.details }}{% endif %};</text:p>
-                    {% elif power.power == 'Share Issues' %}
-                        issuing shares in the Company otherwise than in accordance with section 42, section 44, or section 45 of the Act{% if agreementOptions.agreementType == 'Particular Exercise of Power' %}, as follows, {{ power.details  }}{% endif %};
-                    {% elif power.power == 'Interested Directors' %}
-                        arranging for the Company to enter into a transaction in which a director is interested, such that nothing in sections 140 and 141 of the Act will apply in relation to the transaction{% if agreementOptions.agreementType == 'Particular Exercise of Power' %}, as follows, {{ power.details }}{% endif %};
-                    {% endif %}
-                </text:p>
+                {% if power.power == 'Dividends' %}
+                    <text:p text:style-name="text_normal">authorising dividends otherwise than in accordance with section 53 of the Act{% if agreementOptions.agreementType == 'Particular Exercise of Power' %}, as follows, {{ power.details }}{% endif %};</text:p>
+                {% elif power.power == 'Discount Schemes' %}
+                    <text:p text:style-name="text_normal">approving discount schemes otherwise than in accordance with section 55 of the Act{% if agreementOptions.agreementType == 'Particular Exercise of Power' %}, as follows, {{ power.details }}{% endif %};</text:p>
+                {% elif power.power == 'Share Acquisitions' %}
+                    <text:p text:style-name="text_normal">arranging the acquisition of the Company’s own shares otherwise than in accordance with sections 59 to 65 of the Act{% if agreementOptions.agreementType == 'Particular Exercise of Power' %}, as follows, {{ power.details }}{% endif %};</text:p>
+                {% elif power.power == 'Share Redemptions' %}
+                    <text:p text:style-name="text_normal">arranging the redemption of redeemable shares issued by the Company otherwise than in accordance with sections 69 to 72 of the Act{% if agreementOptions.agreementType == 'Particular Exercise of Power' %}, as follows, {{ power.details }}{% endif %};</text:p>
+                {% elif power.power == 'Financial Assistance' %}
+                    <text:p text:style-name="text_normal">arranging for the Company to give financial assistance for the purpose of, or in connection with, the purchase of shares otherwise than in accordance with sections 76 to 80 of the Act{% if agreementOptions.agreementType == 'Particular Exercise of Power' %}, as follows, {{ power.details }}{% endif %};</text:p>
+                {% elif power.power == 'Director Remuneration and Benefits' %}
+                    <text:p text:style-name="text_normal">authorising any of the matters referred to in section 161(1) of the Act, including:</text:p>
+
+                    <text:list>
+                        <text:list-item>
+                            <text:p text:style-name="text_normal">the payment of remuneration or the provision of other benefits by the Company to a director for services as a director or in any other capacity;</text:p>
+                        </text:list-item>
+                        <text:list-item>
+                            <text:p text:style-name="text_normal">the payment by the Company to a director or former director of compensation for loss of office;</text:p>
+                        </text:list-item>
+                        <text:list-item>
+                            <text:p text:style-name="text_normal">the making of loans by the Company to a director;</text:p>
+                        </text:list-item>
+                        <text:list-item>
+                            <text:p text:style-name="text_normal">the giving of guarantees by the Company for debts incurred by a director; and</text:p>
+                        </text:list-item>
+                        <text:list-item>
+                            <text:p text:style-name="text_normal">the entering into of a contract to do any of the things set out in paragraphs (a), (b), (c), and (d),</text:p>
+                        </text:list-item>
+                    </text:list>
+
+                    <text:p text:style-name="text_normal">otherwise than in accordance with the requirements of section 161 of the Act{% if agreementOptions.agreementType == 'Particular Exercise of Power' %}, as follows, {{ power.details }}{% endif %};</text:p>
+                {% elif power.power == 'Share Issues' %}
+                    <text:p text:style-name="text_normal">issuing shares in the Company otherwise than in accordance with section 42, section 44, or section 45 of the Act{% if agreementOptions.agreementType == 'Particular Exercise of Power' %}, as follows, {{ power.details  }}{% endif %};</text:p>
+                {% elif power.power == 'Interested Directors' %}
+                    <text:p text:style-name="text_normal">arranging for the Company to enter into a transaction in which a director is interested, such that nothing in sections 140 and 141 of the Act will apply in relation to the transaction{% if agreementOptions.agreementType == 'Particular Exercise of Power' %}, as follows, {{ power.details }}{% endif %};</text:p>
+                {% endif %}
             </text:list-item>
         {% endfor %}
     </text:list>
