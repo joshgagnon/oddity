@@ -1,4 +1,4 @@
-{% macro plural_if_needed(list, singular, plural) %}
+{% macro pluralise(list, singular, plural) %}
     {% if list | length == 1 %}
         {{ singular }}
     {% else %}

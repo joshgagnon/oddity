@@ -61,11 +61,11 @@
 
     {% if agreementOptions.agreementType == 'Particular Exercise of Power' %}
         <text:p text:style-name="text_normal">
-            This is a separate agreement to, or concurrence in, the particular exercise of the {{ helpers.plural_if_needed(agreementOptions.powersBeingExercised, 'power', 'powers') }} referred to above for the purposes of section 107(5(a) of the Act.
+            This is a separate agreement to, or concurrence in, the particular exercise of the {{ helpers.pluralise(agreementOptions.powersBeingExercised, 'power', 'powers') }} referred to above for the purposes of section 107(5(a) of the Act.
         </text:p>
-    
+
         <text:p text:style-name="text_normal">
-            This is an agreement to, or concurrence in, the exercise of the {{ helpers.plural_if_needed(agreementOptions.powersBeingExercised, 'power', 'powers') }} referred to above generally or from time to time for the purposes of section 107(5)(b) of the Act. As such, an entitled person may at any time, by notice in writing to the Company, withdraw from this agreement or concurrence as set out in section 107(6) of the Act.
+            This is an agreement to, or concurrence in, the exercise of the {{ helpers.pluralise(agreementOptions.powersBeingExercised, 'power', 'powers') }} referred to above generally or from time to time for the purposes of section 107(5)(b) of the Act. As such, an entitled person may at any time, by notice in writing to the Company, withdraw from this agreement or concurrence as set out in section 107(6) of the Act.
         </text:p>
 
         <text:p text:style-name="text_normal">

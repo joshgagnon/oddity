@@ -13,7 +13,7 @@
 
     <text:p text:style-name="text_normal">
         {% if resolutionOptions.resolutionType == 'Special Resolution at Shareholder Meeting' %}
-            This minute records that on {{ resolutionOptions.dateOfShareholderMeeting }} the shareholders of the Company held a meeting, during which the following {{ helpers.plural_if_needed(resolutions, 'resolution was', 'resolutions were') }} passed:
+            This minute records that on {{ resolutionOptions.dateOfShareholderMeeting }} the shareholders of the Company held a meeting, during which the following {{ helpers.pluralise(resolutions, 'resolution was', 'resolutions were') }} passed:
         {% else %}
             The shareholders of the Company named below hereby resolve in accordance with section 122 of the Companies Act 1993:
         {% endif %}
@@ -43,13 +43,13 @@
 
     {% if resolutionOptions.resolutionType == 'Special Resolution at Shareholder Meeting' %}
         <text:p text:style-name="text_normal">
-            {{ helpers.plural_if_needed(resolutions, 'The above resolution was', 'Each of the above resolutions were') }} approved as a special resolution of the Company’s shareholders by a majority of 75% or, if a higher majority is required by the constitution, that higher majority, of the votes of those shareholders entitled to vote and voting on the question. 
+            {{ helpers.pluralise(resolutions, 'The above resolution was', 'Each of the above resolutions were') }} approved as a special resolution of the Company’s shareholders by a majority of 75% or, if a higher majority is required by the constitution, that higher majority, of the votes of those shareholders entitled to vote and voting on the question. 
             
             {{ components.link('Companies Act 1993, ss 2(1) and 106', 'https://browser.catalex.nz/open_article/query?doc_type=instrument&title=Companies%20Act%201993&find=location&location=ss%202(1)%20+%20106') }}.
         </text:p>
 
         <text:p text:style-name="text_normal">
-            {{ helpers.plural_if_needed(resolutions, 'The resolution was', 'The resolutions were') }} approved by special resolution of each interest group of the Company (where applicable) to extent the {% if resolutions|length > 1 %}resolutions affect {% else %}resolution effects {% endif %} the rights attached to the Company’s shares.
+            {{ helpers.pluralise(resolutions, 'The resolution was', 'The resolutions were') }} approved by special resolution of each interest group of the Company (where applicable) to extent the {% if resolutions|length > 1 %}resolutions affect {% else %}resolution effects {% endif %} the rights attached to the Company’s shares.
             
             {{ components.link('Companies Act 1993, s 117(1)', 'https://browser.catalex.nz/open_article/query?doc_type=instrument&title=Companies%20Act%201993&find=location&location=ss%20117(1)') }}.
         </text:p>
@@ -68,7 +68,7 @@
     {% else %}
         
         <text:p text:style-name="text_normal">
-            The shareholders signing {{ helpers.plural_if_needed(resolutions, 'this resolution', 'these resolutions') }} in lieu of a shareholder meeting:
+            The shareholders signing {{ helpers.pluralise(resolutions, 'this resolution', 'these resolutions') }} in lieu of a shareholder meeting:
         </text:p>
 
         <text:list text:style-name="normal_list">
