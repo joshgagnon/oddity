@@ -15,14 +15,9 @@
         "one two three four",
         "lorem ipsum"
     ],
-    "resolution": {
-        "dateOfBoardMeeting": "2015-09-31"
-    },
-    "directors": [{
-        "name": "Josh"
-    },{
-        "name": "Steve"
-    },{
-        "name": "Jenny"
-    }]
+    "directors": [
+        {"name": "Josh"},
+        {"name": "Steve"},
+        {"name": "Jenny"}
+    ]
 }
