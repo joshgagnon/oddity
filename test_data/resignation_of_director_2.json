@@ -1,0 +1,20 @@
+{
+    "company": {
+        "companyName": "CATALEX LIMITED",
+        "companyNumber": 366352
+    },
+    "addressForService": "Here there and everywhere",
+    "resignationOptions": {
+        "dateOfResignation": "2014-08-22",
+        "companyHasConstitution": "Company does not have Constitution",
+        "effective": "Effective in Future",
+        "effectiveDate": "2015-01-01",
+        "resigningDirector": {
+            "name": "Johnny Mormon"
+        }
+    },
+    "notes": [
+        "Note one",
+        "Note two"
+    ]
+}

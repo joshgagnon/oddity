@@ -15,11 +15,11 @@
     </text:p>
 
     <text:p text:style-name="text_normal">
-        I, {{ resignationOptions.resigningDirector.name }}, hereby resign as a director of the Company, in accordance with section 157(2) of the Companies Act 1993 {% if resignationOptions.companyHasConstitution == 'Company has Constitution' %} and the Company’s constitution {% endif %}. My resignation {% if resignationOptions.effective == 'Effective Immediately' %} is effective immediately {% else %} will be effective on {{ resignationOptions.effectiveDate }}{% endif %}.
+        I, {{ resignationOptions.resigningDirector.name }}, hereby resign as a director of the Company, in accordance with section 157(2) of the Companies Act 1993{% if resignationOptions.companyHasConstitution == 'Company has Constitution' %} and the Company’s constitution{% endif %}. My resignation {% if resignationOptions.effective == 'Effective Immediately' %} is effective immediately{% else %} will be effective on {{ resignationOptions.effectiveDate | date }}{% endif %}.
     </text:p>
 
     <text:p text:style-name="text_normal">
-        I confirm that{% if resignationOptions.effective != 'Effective Immediately' %}, as at {{ resignationOptions.effectiveDate }}{% endif %}:
+        I confirm that{% if resignationOptions.effective != 'Effective Immediately' %}, as at {{ resignationOptions.effectiveDate | date }}{% endif %}:
     </text:p>
 
     <text:list text:style-name="normal_list">
