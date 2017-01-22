@@ -18,7 +18,7 @@
 
     <text:p text:style-name="text_normal">
         {% if resolutionOptions.resolutionType == 'Resolution at Board Meeting' %}
-            This minute records that on {{ resolution.dateOfBoardMeeting }} the directors of the Company held a board meeting, during which the following resolution(s) was/were passed:
+            This minute records that on {{ resolution.dateOfBoardMeeting | date }} the directors of the Company held a board meeting, during which the following resolution(s) was/were passed:
         {% else %}
             The board of the Company hereby makes the following written resolution(s):
         {% endif %}
