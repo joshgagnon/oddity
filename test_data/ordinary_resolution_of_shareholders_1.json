@@ -5,11 +5,9 @@
     },
     "dateOfShareholderMeeting": "2008-01-01",
     "resolutionOptions": {
+        "chairperson": {"name": "Chairy McChairperson"},
         "dateOfMinute": "2008-01-09",
         "resolutionType": "Special Resolution at Shareholder Meeting"
-    },
-    "chairperson": {
-        "name": "Chairy McChairperson"
     },
     "resolutions": [
         {

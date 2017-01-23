@@ -74,7 +74,7 @@
 
     {% if resolutionOptions.resolutionType == 'Special Resolution at Shareholder Meeting' %}
         <text:p text:style-name="text_normal">
-            This minute is certified as true and correct by {{ chairperson.name }}, who chaired the shareholders’ meeting.
+            This minute is certified as true and correct by {{ resolutionOptions.chairperson.name }}, who chaired the shareholders’ meeting.
             {{ components.link('Companies Act 1993, s 124 and cl 8(2) of sch 1', 'https://browser.catalex.nz/open_article/query?doc_type=instrument&title=Companies%20Act%201993&find=location&location=+sch+1%20cl8(2)+124') }}.
         </text:p>
         
