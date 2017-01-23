@@ -14,10 +14,10 @@
         
         <table:table-row>
             <table:table-cell office:value-type="string" table:style-name="layout_table_cell">
-                <text:p text:style-name="text_normal">Entity Details</text:p>
+                <text:p text:style-name="table_contents">Entity Details</text:p>
             </table:table-cell>
             <table:table-cell office:value-type="string" table:style-name="layout_table_cell">
-                <text:p text:style-name="text_normal">
+                <text:p text:style-name="table_contents">
                     {{ company.companyName }} (NZCN {{ company.companyNumber }})
                 </text:p>
             </table:table-cell>
@@ -28,10 +28,10 @@
         -->
         <table:table-row>
             <table:table-cell office:value-type="string" table:style-name="layout_table_cell">
-                <text:p text:style-name="text_normal">Description of Shares</text:p>
+                <text:p text:style-name="table_contents">Description of Shares</text:p>
             </table:table-cell>
             <table:table-cell office:value-type="string" table:style-name="layout_table_cell">
-                <text:p text:style-name="text_normal">{{ transaction.shareClass }}</text:p>
+                <text:p text:style-name="table_contents">{{ transaction.shareClass }}</text:p>
             </table:table-cell>
         </table:table-row>
 
@@ -40,10 +40,10 @@
         -->
         <table:table-row>
             <table:table-cell office:value-type="string" table:style-name="layout_table_cell">
-                <text:p text:style-name="text_normal">Number to be Transferred</text:p>
+                <text:p text:style-name="table_contents">Number to be Transferred</text:p>
             </table:table-cell>
             <table:table-cell office:value-type="string" table:style-name="layout_table_cell">
-                <text:p text:style-name="text_normal">
+                <text:p text:style-name="table_contents">
                     {{ transaction.amount }}
                 </text:p>
             </table:table-cell>
@@ -54,13 +54,13 @@
         -->
         <table:table-row>
             <table:table-cell office:value-type="string" table:style-name="layout_table_cell">
-                <text:p text:style-name="text_normal">Transferor Details</text:p>
-                <text:p text:style-name="text_normal">(Full Name and Physical Address)</text:p>
+                <text:p text:style-name="table_contents">Transferor Details</text:p>
+                <text:p text:style-name="table_contents">(Full Name and Physical Address)</text:p>
             </table:table-cell>
 
             <table:table-cell office:value-type="string" table:style-name="layout_table_cell">
                 {% for holder in transaction.transferors %}
-                    <text:p text:style-name="text_normal">
+                    <text:p text:style-name="table_contents">
                         {{ holder.name }}
 
                         {% if holder.companyNumber %}
@@ -71,6 +71,10 @@
 
                         {{- holder.address }}
                     </text:p>
+
+                    {% if not loop.last %}
+                        {{ components.blank_table_line() }}
+                    {% endif %}
                 {% endfor %}
             </table:table-cell>
         </table:table-row>
@@ -80,13 +84,13 @@
         -->
         <table:table-row>
             <table:table-cell office:value-type="string" table:style-name="layout_table_cell">
-                <text:p text:style-name="text_normal">Transferee Details</text:p>
-                <text:p text:style-name="text_normal">(Full Name and Physical Address)</text:p>
+                <text:p text:style-name="table_contents">Transferee Details</text:p>
+                <text:p text:style-name="table_contents">(Full Name and Physical Address)</text:p>
             </table:table-cell>
 
             <table:table-cell office:value-type="string" table:style-name="layout_table_cell">
                 {% for holder in transaction.transferees %}
-                    <text:p text:style-name="text_normal">
+                    <text:p text:style-name="table_contents">
                         {{ holder.name }}
 
                         {% if holder.companyNumber %}
@@ -97,6 +101,10 @@
 
                         {{- holder.address }}
                     </text:p>
+
+                    {% if not loop.last %}
+                        {{ components.blank_table_line() }}
+                    {% endif %}
                 {% endfor %}
             </table:table-cell>
         </table:table-row>
@@ -106,11 +114,11 @@
         -->
         <table:table-row>
             <table:table-cell office:value-type="string" table:style-name="layout_table_cell">
-                <text:p text:style-name="text_normal">Consideration</text:p>
+                <text:p text:style-name="table_contents">Consideration</text:p>
             </table:table-cell>
 
             <table:table-cell office:value-type="string" table:style-name="layout_table_cell">
-                <text:p text:style-name="text_normal">
+                <text:p text:style-name="table_contents">
                     {{ transaction.consideration }}
                 </text:p>
             </table:table-cell>
@@ -121,11 +129,11 @@
         -->
         <table:table-row>
             <table:table-cell office:value-type="string" table:style-name="layout_table_cell">
-                <text:p text:style-name="text_normal">Transfer Date</text:p>
+                <text:p text:style-name="table_contents">Transfer Date</text:p>
             </table:table-cell>
 
             <table:table-cell office:value-type="string" table:style-name="layout_table_cell">
-                <text:p text:style-name="text_normal">{{ transaction.effectiveDateString | date }}</text:p>
+                <text:p text:style-name="table_contents">{{ transaction.effectiveDateString | date }}</text:p>
             </table:table-cell>
         </table:table-row>
 
@@ -134,11 +142,11 @@
         -->
         <table:table-row>
             <table:table-cell office:value-type="string" table:style-name="layout_table_cell">
-                <text:p text:style-name="text_normal">Reference to agreement (if any)</text:p>
+                <text:p text:style-name="table_contents">Reference to agreement (if any)</text:p>
             </table:table-cell>
 
             <table:table-cell office:value-type="string" table:style-name="layout_table_cell">
-                <text:p text:style-name="text_normal">
+                <text:p text:style-name="table_contents">
                     {{ transaction.referenceToAgreement }}
                 </text:p>
             </table:table-cell>
@@ -149,12 +157,12 @@
         -->
         <table:table-row>
             <table:table-cell office:value-type="string" table:style-name="layout_table_cell">
-                <text:p text:style-name="text_normal">Signatures</text:p>
+                <text:p text:style-name="table_contents">Signatures</text:p>
             </table:table-cell>
 
             <table:table-cell office:value-type="string" table:style-name="layout_table_cell">
                 {% for holding in transaction.transferors %}
-                    <text:p text:style-name="text_normal">
+                    <text:p text:style-name="table_contents">
                         <text:span text:style-name="bold">Signed by</text:span>
 
                         {% if holding.behalfOf %}
@@ -168,15 +176,15 @@
                     
                     {{ components.table_signature_line() }}
 
-                    <text:p text:style-name="text_normal">
+                    <text:p text:style-name="table_contents">
                         Signature of {% if holding.behalfOf %}{{ holding.behalfOf }}{% else %}{{ holding.name }}{% endif %}
                     </text:p>
 
-                    {{ components.blank_line() }}
+                    {{ components.blank_table_line() }}
                 {% endfor %}
 
                 {% for holding in transaction.transferees %}
-                    <text:p text:style-name="text_normal">
+                    <text:p text:style-name="table_contents">
                         <text:span text:style-name="bold">Signed</text:span> by 
 
                         {% if holding.behalfOf %}
@@ -190,12 +198,12 @@
 
                     {{ components.table_signature_line() }}
 
-                    <text:p text:style-name="text_normal">
+                    <text:p text:style-name="table_contents">
                         Signature of {% if holding.behalfOf %}{{ holding.behalfOf }}{% else %}{{ holding.name }}{% endif %}
                     </text:p>
 
                     {% if not loop.last %}
-                        {{ components.blank_line() }}
+                        {{ components.blank_table_line() }}
                     {% endif %}
                 {% endfor %}
             </table:table-cell>

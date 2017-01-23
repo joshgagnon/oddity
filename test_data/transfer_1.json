@@ -10,9 +10,17 @@
             "address": "111 Some Road, Some Suburb, Auckland, New Zealand",
             "name": "Somey McSomebody",
             "companyNumber": 12537
+        },{
+            "address": "252 York Place, City Rise, Dunedin, New Zealand",
+            "name": "Sarah Walker",
+            "companyNumber": 23756
         }],
         "transferees": [{
             "address": "111 Another Road, Another Suburb, Dunedin, New Zealand",
+            "name": "Jack Johnson",
+            "companyNumber": 43876
+        },{
+            "address": "24 High Street, Queenstown, New Zealand",
             "name": "Jack Johnson",
             "companyNumber": 43876
         }],
