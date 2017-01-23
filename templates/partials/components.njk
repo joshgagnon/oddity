@@ -33,6 +33,11 @@
     <text:p text:style-name="signature_line" />
 {% endmacro %}
 
+{% macro table_signature_line() %}
+    <text:p text:style-name="text_normal" />
+    <text:p text:style-name="table_signature_line" />
+{% endmacro %}
+
 {% macro link(text, link) -%}
     <text:a
         text:style-name="internet_link"
@@ -51,28 +56,24 @@
 
             <table:table-row table:style-name="signature_table_row">
                 <table:table-cell office:value-type="string" table:style-name="signature_table_cell">
-
                     {% if (name_attribute) %}
                         <text:p text:style-name="text_normal">Signed by {{ batchedPeople[0][name_attribute] }}</text:p>
                     {% else %}
                         <text:p text:style-name="text_normal">Signed by {{ batchedPeople[0] }}</text:p>
                     {% endif %}
 
-                    <text:p text:style-name="text_normal" />
-                    <text:p text:style-name="table_signature_line" />
+                    {{ table_signature_line() }}
                 </table:table-cell>
 
                 {% if batchedPeople[1] %}
                     <table:table-cell office:value-type="string" table:style-name="signature_table_cell">
-
                         {% if (name_attribute) %}
                             <text:p text:style-name="text_normal">Signed by {{ batchedPeople[1][name_attribute] }}</text:p>
                         {% else %}
                             <text:p text:style-name="text_normal">Signed by {{ batchedPeople[1] }}</text:p>
                         {% endif %}
 
-                        <text:p text:style-name="text_normal" />
-                        <text:p text:style-name="table_signature_line" />
+                        {{ table_signature_line() }}
                     </table:table-cell>
                 {% endif %}
             </table:table-row>
