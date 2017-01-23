@@ -1,0 +1,189 @@
+{% extends 'layouts/default.njk' %}
+
+{% import 'partials/components.njk' as components %}
+{% import 'partials/helpers.njk' as helpers %}
+
+{% block body %}
+
+    {{ components.title('Share Transfer Form') }}
+    {{ components.line_break() }}
+
+    <table:table table:name="Table1" table:style-name="Table1">
+        <table:table-column table:style-name="Table1.A"/>
+        <table:table-column table:style-name="Table1.B"/>
+        
+        <table:table-row>
+            <table:table-cell office:value-type="string" table:style-name="Table1.A1">
+                <text:p text:style-name="text_normal">Entity Details</text:p>
+            </table:table-cell>
+            <table:table-cell office:value-type="string" table:style-name="Table1.B1">
+                <text:p text:style-name="text_normal">
+                    {{ company.companyName }} (NZCN {{ company.companyNumber }})
+                </text:p>
+            </table:table-cell>
+        </table:table-row>
+
+        <!--
+        **  Description of Shares
+        -->
+        <table:table-row>
+            <table:table-cell office:value-type="string" table:style-name="Table1.A2">
+                <text:p text:style-name="text_normal">Description of Shares</text:p>
+            </table:table-cell>
+            <table:table-cell office:value-type="string" table:style-name="Table1.B2">
+                <text:p text:style-name="text_normal">{{ transaction.shareClass }}</text:p>
+            </table:table-cell>
+        </table:table-row>
+
+        <!--
+        **  Number to be Transferred
+        -->
+        <table:table-row>
+            <table:table-cell office:value-type="string" table:style-name="Table1.A2">
+                <text:p text:style-name="text_normal">Number to be Transferred</text:p>
+            </table:table-cell>
+            <table:table-cell office:value-type="string" table:style-name="Table1.B2">
+                <text:p text:style-name="text_normal">
+                    {{ transaction.amount }}
+                </text:p>
+            </table:table-cell>
+        </table:table-row>
+
+        <!--
+        **  Transferor Details
+        -->
+        <table:table-row>
+            <table:table-cell office:value-type="string" table:style-name="Table1.A2">
+                <text:p text:style-name="text_normal">Transferor Details</text:p>
+                <text:p text:style-name="text_normal">(Full Name and Physical Address)</text:p>
+            </table:table-cell>
+
+            <table:table-cell office:value-type="string" table:style-name="Table1.B2">
+                {% for holder in transaction.transferors %}
+                    <text:p text:style-name="text_normal">
+                        {{ holder.name }}
+
+                        {% if holder.companyNumber %}
+                            (NZCN {{ holder.companyNumber }})
+                        {% endif %}
+
+                        <text:line-break />
+
+                        {{- holder.address }}
+                    </text:p>
+                {% endfor %}
+            </table:table-cell>
+        </table:table-row>
+
+        <!--
+        **  Transferee Details
+        -->
+        <table:table-row>
+            <table:table-cell office:value-type="string" table:style-name="Table1.A2">
+                <text:p text:style-name="text_normal">Transferee Details</text:p>
+                <text:p text:style-name="text_normal">(Full Name and Physical Address)</text:p>
+            </table:table-cell>
+
+            <table:table-cell office:value-type="string" table:style-name="Table1.B2">
+                {% for holder in transaction.transferees %}
+                    <text:p text:style-name="text_normal">
+                        {{ holder.name }}
+
+                        {% if holder.companyNumber %}
+                            (NZCN {{ holder.companyNumber }})
+                        {% endif %}
+
+                        <text:line-break />
+
+                        {{- holder.address }}
+                    </text:p>
+                {% endfor %}
+            </table:table-cell>
+        </table:table-row>
+
+        <!--
+        **  Consideration
+        -->
+        <table:table-row>
+            <table:table-cell office:value-type="string" table:style-name="Table1.A2">
+                <text:p text:style-name="text_normal">Consideration</text:p>
+            </table:table-cell>
+
+            <table:table-cell office:value-type="string" table:style-name="Table1.B2">
+                <text:p text:style-name="text_normal">
+                    {{ transaction.consideration }}
+                </text:p>
+            </table:table-cell>
+        </table:table-row>
+
+        <!--
+        **  Transfer Date
+        -->
+        <table:table-row>
+            <table:table-cell office:value-type="string" table:style-name="Table1.A2">
+                <text:p text:style-name="text_normal">Transfer Date</text:p>
+            </table:table-cell>
+
+            <table:table-cell office:value-type="string" table:style-name="Table1.B2">
+                <text:p text:style-name="text_normal">{{ transaction.effectiveDateString | date }}</text:p>
+            </table:table-cell>
+        </table:table-row>
+
+        <!--
+        **  Reference to agreement
+        -->
+        <table:table-row>
+            <table:table-cell office:value-type="string" table:style-name="Table1.A2">
+                <text:p text:style-name="text_normal">Reference to agreement (if any)</text:p>
+            </table:table-cell>
+
+            <table:table-cell office:value-type="string" table:style-name="Table1.B2">
+                <text:p text:style-name="text_normal">
+                    {{ transaction.referenceToAgreement }}
+                </text:p>
+            </table:table-cell>
+        </table:table-row>
+
+        <!--
+        **  Signatures
+        -->
+        <table:table-row>
+            <table:table-cell office:value-type="string" table:style-name="Table1.A2">
+                <text:p text:style-name="text_normal">Signatures</text:p>
+            </table:table-cell>
+
+            <table:table-cell office:value-type="string" table:style-name="Table1.B2">
+                {% for holding in transaction.transferors %}
+                    <text:p text:style-name="text_normal">
+                        Signed by {% if holding.behalfOf %}{{ holding.behalfOf }} on behalf of the{% else %}{{ holding.name }} as{% endif %} Transferor:
+                    </text:p>
+                    
+                    {{ components.table_signature_line() }}
+
+                    <text:p text:style-name="text_normal">
+                        Signature of {% if holding.behalfOf %}{{ holding.behalfOf }}{% else %}{{ holding.name }}{% endif %}
+                    </text:p>
+
+                    {{ components.line_break() }}
+                {% endfor %}
+
+                {% for holding in transaction.transferees %}
+                    <text:p text:style-name="text_normal">
+                        Signed by {% if holding.behalfOf %}{{ holding.behalfOf }} on behalf of the{% else %}{{ holding.name }} as{% endif %} Transferee:
+                    </text:p>
+
+                    {{ components.table_signature_line() }}
+
+                    <text:p text:style-name="text_normal">
+                        Signature of {% if holding.behalfOf %}{{ holding.behalfOf }}{% else %}{{ holding.name }}{% endif %}
+                    </text:p>
+
+                    {% if not loop.last %}
+                        {{ components.line_break() }}
+                    {% endif %}
+                {% endfor %}
+            </table:table-cell>
+        </table:table-row>
+    </table:table>
+
+{% endblock %}

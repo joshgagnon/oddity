@@ -1,0 +1,23 @@
+{
+    "company": {
+        "companyName": "CATALEX LIMITED",
+        "companyNumber": 366352
+    },
+    "transaction": {
+        "shareClass": "Testing share class",
+        "amount": 100000,
+        "transferors": [{
+            "address": "111 Some Road, Some Suburb, Auckland, New Zealand",
+            "name": "Somey McSomebody",
+            "companyNumber": 12537
+        }],
+        "transferees": [{
+            "address": "111 Another Road, Another Suburb, Dunedin, New Zealand",
+            "name": "Jack Johnson",
+            "companyNumber": 43876
+        }],
+        "consideration": "Consider this",
+        "effectiveDateString": "2015-03-19",
+        "referenceToAgreement": "Some agreement"
+    }
+}

@@ -70,7 +70,8 @@ const templates = [
     'notice_of_meeting',
     'ordinary_resolution_of_shareholders',
     'resignation_of_director',
-    'special_resolution_of_shareholders'
+    'special_resolution_of_shareholders',
+    'transfer'
 ];
 
 module.exports = function(config) {
