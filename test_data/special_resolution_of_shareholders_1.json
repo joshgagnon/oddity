@@ -1,0 +1,41 @@
+{
+    "company": {
+        "companyName": "CATALEX LIMITED",
+        "companyNumber": 366352
+    },
+    "resolutionOptions": {
+        "chairperson": {"name": "Johnny Smith"},
+        "dateOfMinute": "2015-09-25",
+        "resolutionType": "Special Resolution at Shareholder Meeting",
+        "dateOfShareholderMeeting": "2014-05-18"
+    },
+    "resolutions": [{
+            "resolutionType": "Adopt Constitution",
+            "date": "2016-01-01"
+        },{
+            "resolutionType": "Alter Constitution",
+            "date": "2016-01-01"
+        },{
+            "resolutionType": "Revoke Constitution",
+            "date": "2016-01-01"
+        },{
+            "resolutionType": "Approve Major Transaction"
+        },{
+            "resolutionType": "Approve Amalgamation"
+        },{
+            "resolutionType": "Put Company into Liquidation",
+            "liquidators": [
+                {"name": "Billie Jackson"},
+                {"name": "Hannah Reid"},
+                {"name": "Isaac Manning"}
+            ]
+        },{
+            "resolutionType": "Custom",
+            "text": "ierbfdz wejbnfva eouhi oaurh viaubnfavbnirea"
+        }],
+    "notes": [
+        "Note one",
+        "Note two",
+        "Note three"
+    ]
+}

@@ -1,0 +1,45 @@
+{
+    "company": {
+        "companyName": "CATALEX LIMITED",
+        "companyNumber": 366352
+    },
+    "resolutionOptions": {
+        "dateOfMinute": "2015-09-25",
+        "resolutionType": "Written Resolution in lieu of Shareholder Meeting",
+        "shareholders": [
+            {"name": "Timothy"},
+            {"name": "Jack"},
+            {"name": "Sarah"}
+        ]
+    },
+    "resolutions": [{
+            "resolutionType": "Adopt Constitution",
+            "date": "2016-01-01"
+        },{
+            "resolutionType": "Alter Constitution",
+            "date": "2016-01-01"
+        },{
+            "resolutionType": "Revoke Constitution",
+            "date": "2016-01-01"
+        },{
+            "resolutionType": "Approve Major Transaction"
+        },{
+            "resolutionType": "Approve Amalgamation"
+        },{
+            "resolutionType": "Put Company into Liquidation",
+            "liquidators": [
+                {"name": "Billie Jackson"},
+                {"name": "Hannah Reid"},
+                {"name": "Isaac Manning"}
+            ]
+        },{
+            "resolutionType": "Custom",
+            "text": "ierbfdz wejbnfva eouhi oaurh viaubnfavbnirea"
+        }
+    ],
+    "notes": [
+        "Note one",
+        "Note two",
+        "Note three"
+    ]
+}
