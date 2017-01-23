@@ -106,12 +106,31 @@
         <style:table-column-properties style:column-width="8.5cm" style:rel-column-width="32767*"/>
     </style:style>
     <style:style style:family="table-cell" style:name="layout_table_cell">
-        <style:table-cell-properties fo:border-bottom="0.05pt solid #000000" fo:border-left="0.05pt solid #000000" fo:border-right="none" fo:border-top="0.05pt solid #000000" fo:padding="0.199cm"/>
+        <style:table-cell-properties fo:border-bottom="0.05pt solid #000000" fo:border-left="0.05pt solid #000000" fo:border-right="none" fo:border-top="0.05pt solid #000000" fo:padding="0.25cm" fo:padding-top="0.35cm" />
     </style:style>
 
     {# This is different to a normal signature line, for some unknown reasons :) (Because it's in a table) #}
     <style:style style:family="paragraph" style:name="table_signature_line" style:parent-style-name="horizontal_line">
         <style:paragraph-properties fo:margin-left="0cm" fo:margin-right="2.5cm" fo:text-indent="0cm" style:auto-text-indent="false"/>
+    </style:style>
+
+
+    <style:style
+        style:family="paragraph"
+        style:name="table_contents"
+        style:parent-style-name="table_contents_base">
+
+        <style:paragraph-properties
+                fo:line-height="120%"
+                fo:margin-bottom="0cm"
+                fo:margin-top="0cm"
+                loext:contextual-spacing="false" />
+
+        <style:text-properties
+            fo:font-size="11pt"
+            style:font-name="Calibri2"
+            style:font-size-asian="11pt"
+            style:font-size-complex="11pt" />
     </style:style>
 
     <!--
