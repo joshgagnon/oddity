@@ -45,17 +45,6 @@
             Each of the above {{ helpers.pluralise(resolutions, 'resolution was', 'resolutions were') }} approved as an ordinary resolution of the Company’s shareholders by a simple majority of the votes of those shareholders entitled to vote and voting on the question.
             {{ components.link('Companies Act 1993, s 105', 'https://browser.catalex.nz/open_article/query?doc_type=instrument&title=Companies%20Act%201993&find=location&location=ss%20105') }}.
         </text:p>
-
-        {{ components.notes(notes) }}
-
-        <text:p text:style-name="text_normal">
-            This minute is certified as true and correct by {{ chairperson.name }}, who chaired the shareholders’ meeting.
-            {{ components.link('Companies Act 1993, s 124 and cl 8(2) of sch 1', 'https://browser.catalex.nz/open_article/query?doc_type=instrument&title=Companies%20Act%201993&find=location&location=+sch+1%20cl8(2)+124') }}.
-        </text:p>
-        
-        <text:p text:style-name="text_normal">Signed by {{ resolutionOptions.chairperson.name }} as chairperson:</text:p>
-
-        {{ components.signature_line() }}
     {% else %}
         <text:p text:style-name="text_normal">
             The shareholders signing {{ helpers.pluralise(resolutions, 'this resolution', 'these resolutions') }} in lieu of a shareholder meeting:
@@ -79,7 +68,20 @@
                 </text:p>
             </text:list-item>
         </text:list>
+    {% endif %}
 
+    {{ components.notes(notes) }}
+
+    {% if resolutionOptions.resolutionType == 'Special Resolution at Shareholder Meeting' %}
+        <text:p text:style-name="text_normal">
+            This minute is certified as true and correct by {{ chairperson.name }}, who chaired the shareholders’ meeting.
+            {{ components.link('Companies Act 1993, s 124 and cl 8(2) of sch 1', 'https://browser.catalex.nz/open_article/query?doc_type=instrument&title=Companies%20Act%201993&find=location&location=+sch+1%20cl8(2)+124') }}.
+        </text:p>
+        
+        <text:p text:style-name="text_normal">Signed by {{ resolutionOptions.chairperson.name }} as chairperson:</text:p>
+
+        {{ components.signature_line() }}
+    {% else %}
         {{ components.signature_table(directors, 'name') }}
     {% endif %}
 
