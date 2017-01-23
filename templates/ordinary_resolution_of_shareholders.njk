@@ -1,6 +1,7 @@
 {% extends 'layouts/default.njk' %}
 
 {% import 'partials/components.njk' as components %}
+{% import 'partials/helpers.njk' as helpers %}
 
 {% block body %}
 
@@ -12,61 +13,74 @@
 
     <text:p text:style-name="text_normal">
         {% if resolutionOptions.resolutionType == 'Special Resolution at Shareholder Meeting' %}
-            This minute records that on {{ dateOfShareholderMeeting }} the shareholders of the Company held a meeting, during which the following
-
-            {% if resolutions | length > 1 %}
-                resolutions were
-            {% else %}
-                resolution was
-            {% endif %} passed:
+            This minute records that on {{ dateOfShareholderMeeting | date }} the shareholders of the Company held a meeting, during which the following {{ helpers.pluralise(resolutions, 'resolution was', 'resolutions were') }} passed:
         {% else %}
             The shareholders of the Company named below hereby resolve in accordance with section 122 of the Companies Act 1993: 
         {% endif %} 
     </text:p>
 
     <text:list text:style-name="normal_list">
-        <text:list-item>
-            <text:p text:style-name="text_normal">
-                {% for resolution in resolutions %} 
+        {% for resolution in resolutions %} 
+            <text:list-item>
+                <text:p text:style-name="text_normal">
                     {% if resolution.resolutionType == 'Appoint Director' %}
-                        That {{ resolution.director.name }} be appointed a director of the Company with effect from {{ resolution.date }}. Companies Act 1993, ss 153(2).
+                        That {{ resolution.director.name }} be appointed a director of the Company with effect from {{ resolution.date | date }}. Companies Act 1993, ss 153(2).
                     {% endif %}
                     {% if resolution.resolutionType == 'Appoint Directors' %}
-                        That {{ resolution.directors | join_and('name') }} be appointed a directors of the Company with effect from {{ resolution.date }}. Prior to this resolution being passed, a separate resolution that the appointment of the directors be voted on in a single resolution was passed. Alternatively, the votes were taken by ballet or poll. Companies Act 1993, ss 153(2) and 155.
+                        That {{ resolution.directors | join_and('name') }} be appointed a directors of the Company with effect from {{ resolution.date | date }}. Prior to this resolution being passed, a separate resolution that the appointment of the directors be voted on in a single resolution was passed. Alternatively, the votes were taken by ballet or poll. Companies Act 1993, ss 153(2) and 155.
                     {% endif %}
                     {% if resolution.resolutionType == 'Remove Director' %}
-                        That {{ resolution.director.name }} be removed from office as a director of the Company with effect from {{ resolution.date }}. The shareholders’ meeting was called for the purpose of, or for purposes that include, removing the director, as stated in the notice of meeting. Companies Act 1993, ss 156 and 157(1)(b).
+                        That {{ resolution.director.name }} be removed from office as a director of the Company with effect from {{ resolution.date | date }}. The shareholders’ meeting was called for the purpose of, or for purposes that include, removing the director, as stated in the notice of meeting. Companies Act 1993, ss 156 and 157(1)(b).
                     {% endif %}
                     {% if resolution.resolutionType == 'Custom' %}
                         {{ resolution.text }}
                     {% endif %}
-                {% endfor %}
-            </text:p>
-        </text:list-item>
+                </text:p>
+            </text:list-item>
+        {% endfor %}
     </text:list>
 
     {% if resolutionOptions.resolutionType == 'Special Resolution at Shareholder Meeting' %}
         <text:p text:style-name="text_normal">
-            {% if resolutions|length > 1 %}
-                Each of the above resolutions were
-            {% else %}
-                The above resolution was
-            {% endif %}
-            approved as an ordinary resolution of the Company’s shareholders by a simple majority of the votes of those shareholders entitled to vote and voting on the question. Companies Act 1993, s 105.
+            Each of the above {{ helpers.pluralise(resolutions, 'resolution was', 'resolutions were') }} approved as an ordinary resolution of the Company’s shareholders by a simple majority of the votes of those shareholders entitled to vote and voting on the question.
+            {{ components.link('Companies Act 1993, s 105', 'https://browser.catalex.nz/open_article/query?doc_type=instrument&title=Companies%20Act%201993&find=location&location=ss%20105') }}.
         </text:p>
 
         {{ components.notes(notes) }}
+
+        <text:p text:style-name="text_normal">
+            This minute is certified as true and correct by {{ chairperson.name }}, who chaired the shareholders’ meeting.
+            {{ components.link('Companies Act 1993, s 124 and cl 8(2) of sch 1', 'https://browser.catalex.nz/open_article/query?doc_type=instrument&title=Companies%20Act%201993&find=location&location=+sch+1%20cl8(2)+124') }}.
+        </text:p>
+        
+        <text:p text:style-name="text_normal">Signed by {{ resolutionOptions.chairperson.name }} as chairperson:</text:p>
+
+        {{ components.signature_line() }}
+    {% else %}
+        <text:p text:style-name="text_normal">
+            The shareholders signing {{ helpers.pluralise(resolutions, 'this resolution', 'these resolutions') }} in lieu of a shareholder meeting:
+        </text:p>
+
+        <text:list text:style-name="normal_list">
+            <text:list-item>
+                <text:p text:style-name="text_normal">
+                    are not less than 75%, or such other percentage as the constitution may require for passing a special resolution, of the shareholders who would be entitled to vote on the resolution at a meeting of the Company’s shareholders;
+                </text:p>
+            </text:list-item>
+            <text:list-item>
+                <text:p text:style-name="text_normal">
+                    together hold not less than 75% or, if a higher percentage is required by the constitution, that higher percentage, of the votes entitled to be cast on the resolution
+                    {{ components.link('Companies Act 1993, s 122', 'https://browser.catalex.nz/open_article/query?doc_type=instrument&title=Companies%20Act%201993&find=location&location=s%20122') }}; and
+                </text:p>
+            </text:list-item>
+            <text:list-item>
+                <text:p text:style-name="text_normal">
+                    confirm that, to the extent this resolution affects the rights attached to shares in terms of section 117(1) of the Companies Act 1993, it has been approved by special resolution of each interest group.
+                </text:p>
+            </text:list-item>
+        </text:list>
+
+        {{ components.signature_table(directors, 'name') }}
     {% endif %}
-
-    <text:p text:style-name="text_normal">
-        This minute is certified as true and correct by {{ chairperson.name }}, who chaired the shareholders’ meeting.
-        {{ components.link('Companies Act 1993, s 124 and cl 8(2) of sch 1', 'https://browser.catalex.nz/open_article/query?doc_type=instrument&title=Companies%20Act%201993&find=location&location=+sch+1%20cl8(2)+124') }}.
-    </text:p>
-    
-    <text:p text:style-name="text_normal">Signed by {{ resolutionOptions.chairperson.name }} as chairperson:</text:p>
-
-    {{ components.signature_line() }}
-    
-    {{ components.signature_table(directors, 'name') }}
 
 {% endblock %}
