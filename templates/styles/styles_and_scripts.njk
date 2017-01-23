@@ -68,6 +68,13 @@
     </style:style>
 
     <!--
+    **  Text styling
+    -->
+    <style:style style:family="text" style:name="bold">
+        <style:text-properties fo:font-weight="bold" style:font-weight-asian="bold" style:font-weight-complex="bold" />
+    </style:style>
+
+    <!--
     **  Signature line
     -->
     <style:style
@@ -92,6 +99,16 @@
         <style:table-cell-properties fo:border="none" fo:padding="0.097cm"/>
     </style:style>
 
+    <style:style style:family="table" style:name="layout_table">
+        <style:table-properties style:width="17cm" table:align="margins"/>
+    </style:style>
+    <style:style style:family="table-column" style:name="layout_table_column">
+        <style:table-column-properties style:column-width="8.5cm" style:rel-column-width="32767*"/>
+    </style:style>
+    <style:style style:family="table-cell" style:name="layout_table_cell">
+        <style:table-cell-properties fo:border-bottom="0.05pt solid #000000" fo:border-left="0.05pt solid #000000" fo:border-right="none" fo:border-top="0.05pt solid #000000" fo:padding="0.199cm"/>
+    </style:style>
+
     {# This is different to a normal signature line, for some unknown reasons :) (Because it's in a table) #}
     <style:style style:family="paragraph" style:name="table_signature_line" style:parent-style-name="horizontal_line">
         <style:paragraph-properties fo:margin-left="0cm" fo:margin-right="2.5cm" fo:text-indent="0cm" style:auto-text-indent="false"/>
@@ -110,7 +127,6 @@
     <!--
     ** Links
     -->
-
     <style:style style:display-name="Internet link" style:family="text" style:name="internet_link">
         <style:text-properties
             fo:color="#000080"
