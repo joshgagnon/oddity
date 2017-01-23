@@ -6,7 +6,7 @@
 {% block body %}
 
     {{ components.title('Share Transfer Form') }}
-    {{ components.line_break() }}
+    {{ components.blank_line() }}
 
     <table:table table:name="Table1" table:style-name="Table1">
         <table:table-column table:style-name="Table1.A"/>
@@ -164,7 +164,7 @@
                         Signature of {% if holding.behalfOf %}{{ holding.behalfOf }}{% else %}{{ holding.name }}{% endif %}
                     </text:p>
 
-                    {{ components.line_break() }}
+                    {{ components.blank_line() }}
                 {% endfor %}
 
                 {% for holding in transaction.transferees %}
@@ -179,7 +179,7 @@
                     </text:p>
 
                     {% if not loop.last %}
-                        {{ components.line_break() }}
+                        {{ components.blank_line() }}
                     {% endif %}
                 {% endfor %}
             </table:table-cell>

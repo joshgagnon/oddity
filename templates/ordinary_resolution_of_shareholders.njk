@@ -9,7 +9,7 @@
     {{ components.company_info_subtitle(company.companyName, company.companyNumber) }}
     {{ components.date_subtitle(resolutionOptions.dateOfMinute | date) }}
 
-    {{ components.line_break() }}
+    {{ components.blank_line() }}
 
     <text:p text:style-name="text_normal">
         {% if resolutionOptions.resolutionType == 'Special Resolution at Shareholder Meeting' %}

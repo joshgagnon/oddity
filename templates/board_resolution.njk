@@ -14,7 +14,7 @@
     {{ components.company_info_subtitle(company.companyName, company.companyNumber) }}
     {{ components.date_subtitle(documentDate | date) }}
 
-    {{ components.line_break() }}
+    {{ components.blank_line() }}
 
     <text:p text:style-name="text_normal">
         {% if resolutionOptions.resolutionType == 'Resolution at Board Meeting' %}
