@@ -1,9 +1,10 @@
 const path = require('path');
-const nunjucks = require('nunjucks')
+const nunjucks = require('nunjucks');
+const moment = require('moment');
 
 function filterise(env) {
     const date = function(date) {
-        return moment(date, 'YYYY-MM-DD').format('D MMM YYYY');
+        return moment(date, 'D MMM YYYY').format('D MMM YYYY');
     }
 
     const timestampToDate = function(date) {
@@ -62,7 +63,7 @@ function filterise(env) {
 }
 
 module.exports = function(directory) {
-    const dir = path.join(__dirname + '../node_modules/', directory, '/templates/');
+    const dir = path.join(__dirname + '/../node_modules/', directory, '/templates/');
     const baseDocsDir = path.join(dir, 'base_documents/');
 
     const envLoader = new nunjucks.FileSystemLoader(dir, { autoescape: true });

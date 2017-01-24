@@ -4,7 +4,6 @@ var Promise = require('bluebird');
 const fs = Promise.promisifyAll(require("fs"));
 const nunjucks = require('nunjucks');
 var JSZip = require("jszip");
-const moment = require('moment');
 const nunjucksEnvFactory = require('./nunjucksEnvFactory');
 
 var app = express();
@@ -42,7 +41,7 @@ module.exports = function(config) {
                 }
 
                 res.set('Content-Type', 'application/' + filetype);
-                res.set('Content-Disposition', 'attachment; filename=' + filename + '.' + fileType);
+                res.set('Content-Disposition', 'attachment; filename=' + filename + '.' + filetype);
                 res.end(zip, 'binary');
             });
         } else {
