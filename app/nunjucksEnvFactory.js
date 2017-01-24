@@ -8,11 +8,11 @@ function filterise(env) {
     }
 
     const timestampToDate = function(date) {
-        return moment(date, 'YYYY-MM-DD').format('D MMMM YYYY');
+        return moment(date).format('D MMMM YYYY');
     }
 
     const timestampToTime = function(date) {
-        return moment(date, 'YYYY-MM-DD').format('D MMMM YYYY');
+        return moment(date).format('h:mm a');
     }
 
     // Take a list of items and format them in a string
