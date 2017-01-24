@@ -32,7 +32,7 @@ module.exports = function(config) {
         }
 
         if (env) {
-            const renderedContentXml = env.nunjucks.render('resignation_of_director.njk', req.body.values);//req.body.formName + '.njk', req.body.values);
+            const renderedContentXml = env.nunjucks.render(req.body.formName + '.njk', req.body.values);
             const filetype = req.body.values.fileType;
             const filename = !!req.body.values.filename ? req.body.values.filename : req.body.formName;
 
