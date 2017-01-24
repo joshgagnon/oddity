@@ -3,20 +3,20 @@
         "companyName": "CATALEX LIMITED",
         "companyNumber": 366352
     },
-    "dateOfShareholderMeeting": "2008-01-01",
+    "dateOfShareholderMeeting": "1 January 2016",
     "resolutionOptions": {
         "chairperson": {"name": "Chairy McChairperson"},
-        "dateOfMinute": "2008-01-09",
+        "dateOfMinute": "9 January 2008",
         "resolutionType": "Special Resolution at Shareholder Meeting"
     },
     "resolutions": [
         {
             "resolutionType": "Appoint Director",
-            "date": "2016-01-01",
+            "date": "1 January 2016",
             "director": {"name": "Jack Manning"}
         },{
             "resolutionType": "Appoint Directors",
-            "date": "2016-01-01",
+            "date": "1 January 2016",
             "directors": [
                 {"name": "Jimmy Wales"},
                 {"name": "John Manning"},
@@ -24,7 +24,7 @@
             ]
         },{
             "resolutionType": "Remove Director",
-            "date": "2016-01-01",
+            "date": "1 January 2016",
             "director": {"name": "Emma Harrison"}
         },{
             "resolutionType": "Custom",

@@ -4,7 +4,7 @@
         "companyNumber": 366352
     },
     "resolutionOptions": {
-        "dateOfMinute": "2015-09-25",
+        "dateOfMinute": "1 January 2016",
         "resolutionType": "Written Resolution in lieu of Shareholder Meeting",
         "shareholders": [
             {"name": "Timothy"},
@@ -14,13 +14,13 @@
     },
     "resolutions": [{
             "resolutionType": "Adopt Constitution",
-            "date": "2016-01-01"
+            "date": "1 January 2016"
         },{
             "resolutionType": "Alter Constitution",
-            "date": "2016-01-01"
+            "date": "1 January 2016"
         },{
             "resolutionType": "Revoke Constitution",
-            "date": "2016-01-01"
+            "date": "1 January 2016"
         },{
             "resolutionType": "Approve Major Transaction"
         },{

@@ -5,10 +5,10 @@
     },
     "addressForService": "Here there and everywhere",
     "resignationOptions": {
-        "dateOfResignation": "2014-08-22",
+        "dateOfResignation": "22 August 2014",
         "companyHasConstitution": "Company does not have Constitution",
         "effective": "Effective in Future",
-        "effectiveDate": "2015-01-01",
+        "effectiveDate": "1 January 2015",
         "resigningDirector": {
             "name": "Johnny Mormon"
         }
