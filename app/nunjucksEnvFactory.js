@@ -4,15 +4,15 @@ const moment = require('moment');
 
 function filterise(env) {
     const date = function(date) {
-        return moment(date, 'D MMM YYYY').format('D MMM YYYY');
+        return moment(date, 'D MMMM YYYY').format('D MMMM YYYY');
     }
 
     const timestampToDate = function(date) {
-        return moment(date, 'YYYY-MM-DD').format('D MMM YYYY');
+        return moment(date, 'YYYY-MM-DD').format('D MMMM YYYY');
     }
 
     const timestampToTime = function(date) {
-        return moment(date, 'YYYY-MM-DD').format('D MMM YYYY');
+        return moment(date, 'YYYY-MM-DD').format('D MMMM YYYY');
     }
 
     // Take a list of items and format them in a string
