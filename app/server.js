@@ -4,6 +4,7 @@ var Promise = require('bluebird');
 const fs = Promise.promisifyAll(require("fs"));
 const nunjucks = require('nunjucks');
 var JSZip = require("jszip");
+const path = require('path');
 const nunjucksEnvFactory = require('./nunjucksEnvFactory');
 
 var app = express();
@@ -14,7 +15,7 @@ const nunjucksEnviroments = {
 };
 
 
-const DEFAULT_BASE_DOCUMENT = 'base_documents/default.odt';
+const DEFAULT_BASE_DOCUMENT_NAME = 'default.odt';
 
 module.exports = function(config) {
     const port = config.server_port || 3000;
@@ -35,7 +36,9 @@ module.exports = function(config) {
             const filetype = req.body.values.fileType;
             const filename = !!req.body.values.filename ? req.body.values.filename : req.body.formName;
 
-            packZip(renderedContentXml).then((zip) => {
+            const baseDocPath = path.join(env.baseDocsDir, DEFAULT_BASE_DOCUMENT_NAME);
+
+            packZip(baseDocPath, renderedContentXml).then((zip) => {
                 if (filetype != 'odt') {
                     // TODO: convert here
                 }
@@ -52,8 +55,8 @@ module.exports = function(config) {
     });
 }
 
-function packZip(contentXml) {
-    return fs.readFileAsync(DEFAULT_BASE_DOCUMENT)
+function packZip(baseDocPath, contentXml) {
+    return fs.readFileAsync(baseDocPath)
         .then((odt) => {
             return JSZip.loadAsync(odt)
                 .then((zip) => {

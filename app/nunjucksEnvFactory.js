@@ -64,11 +64,11 @@ function filterise(env) {
 
 module.exports = function(directory) {
     const dir = path.join(__dirname + '/../node_modules/', directory, '/templates/');
-    const baseDocsDir = path.join(dir, 'base_documents/');
+    const baseDocsDir = path.join(dir, '../base_documents/');
 
     const envLoader = new nunjucks.FileSystemLoader(dir, { autoescape: true });
-    let env = new nunjucks.Environment(envLoader);
-    env = filterise(env);
+    const env = new nunjucks.Environment(envLoader);
+    const envWithFilters = filterise(env);
     
-    return { baseDocsDir, dir, nunjucks: env };
+    return { baseDocsDir, dir, nunjucks: envWithFilters };
 }
