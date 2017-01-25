@@ -10,9 +10,7 @@
     "type": "git",
     "url": "https://github.com/paddymoran/convert_v2"
   },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {},
+  "author": "Paddy Moran",
   "dependencies": {
     "babel-core": "6.18.2",
     "babel-loader": "^6.2.1",
