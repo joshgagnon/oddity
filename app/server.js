@@ -59,7 +59,7 @@ module.exports = function(config) {
                     // User wants ODT, so file doesn't need converted
                     res.set('Content-Type', 'application/odt');
                     res.set('Content-Disposition', 'attachment; filename=' + filename + '.odt');
-                    res.end(zip, 'binary');
+                    res.end(odt, 'binary');
                 }
             });
         } else {
