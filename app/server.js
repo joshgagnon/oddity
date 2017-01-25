@@ -6,6 +6,8 @@ const nunjucks = require('nunjucks');
 var JSZip = require("jszip");
 const path = require('path');
 const nunjucksEnvFactory = require('./nunjucksEnvFactory');
+const fetch = require('node-fetch');
+const FormData = require('form-data')
 
 var app = express();
 app.use(bodyParser.json());
@@ -38,14 +40,27 @@ module.exports = function(config) {
 
             const baseDocPath = path.join(env.baseDocsDir, DEFAULT_BASE_DOCUMENT_NAME);
 
-            packZip(baseDocPath, renderedContentXml).then((zip) => {
+            packZip(baseDocPath, renderedContentXml).then((odt) => {
                 if (filetype != 'odt') {
-                    // TODO: convert here
-                }
+                    // File needs converted
+                    convert(odt, filename, filetype)
+                        .then((response) => {
+                            res.set('Content-Type', response.headers.get('Content-Type'));
+                            res.set('Content-Disposition', response.headers.get('Content-Disposition'));
 
-                res.set('Content-Type', 'application/' + filetype);
-                res.set('Content-Disposition', 'attachment; filename=' + filename + '.' + filetype);
-                res.end(zip, 'binary');
+                            response.body
+                                .on('data', chunk => res.write(chunk))
+                                .on('end', chunk => res.end());
+                        })
+                        .catch(e => {
+                            res.serverError(e);
+                        });
+                } else {
+                    // User wants ODT, so file doesn't need converted
+                    res.set('Content-Type', 'application/odt');
+                    res.set('Content-Disposition', 'attachment; filename=' + filename + '.odt');
+                    res.end(zip, 'binary');
+                }
             });
         } else {
             res.set('Content-Type', 'application/json');
@@ -53,16 +68,32 @@ module.exports = function(config) {
             res.end('Error: unknown service');
         }
     });
-}
 
-function packZip(baseDocPath, contentXml) {
-    return fs.readFileAsync(baseDocPath)
-        .then((odt) => {
-            return JSZip.loadAsync(odt)
-                .then((zip) => {
-                    zip.file('content.xml', contentXml);
-                    return zip.generateAsync({type: 'nodebuffer'});
-                });
-        })
-        .catch(error => console.log(error));
+    function convert(file, filename, filetype) {
+        let form = new FormData();
+
+        form.append('fileType', filetype);
+        form.append('file', file, {filename: filename + '.odt'});
+
+        return fetch(config.convert_url, {
+            method: 'POST',
+            header: {
+                'Accept': '*/*',
+                'Content-type': 'multipart/form-data'
+            },
+            body: form
+        });
+    }
+
+    function packZip(baseDocPath, contentXml) {
+        return fs.readFileAsync(baseDocPath)
+            .then((odt) => {
+                return JSZip.loadAsync(odt)
+                    .then((zip) => {
+                        zip.file('content.xml', contentXml);
+                        return zip.generateAsync({type: 'nodebuffer'});
+                    });
+            })
+            .catch(error => console.log(error));
+    }
 }

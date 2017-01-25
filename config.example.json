@@ -1,3 +1,4 @@
 {
-    "server_port": 5671
+    "server_port": 5671,
+    "convert_url": "https://convert.catalex.nz/convert"
 }
