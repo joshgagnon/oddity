@@ -62,13 +62,17 @@ function filterise(env) {
     return env;
 }
 
+const DEFAULT_BASE_DOCUMENT_NAME = 'default.odt';
+
 module.exports = function(directory) {
     const dir = path.join(__dirname + '/../node_modules/', directory, '/templates/');
+
     const baseDocsDir = path.join(dir, '../base_documents/');
+    const defaultBaseDocPath = path.join(baseDocsDir, DEFAULT_BASE_DOCUMENT_NAME);
 
     const envLoader = new nunjucks.FileSystemLoader(dir, { autoescape: true });
     const env = new nunjucks.Environment(envLoader);
     const envWithFilters = filterise(env);
     
-    return { baseDocsDir, dir, nunjucks: envWithFilters };
+    return { baseDocsDir, defaultBaseDocPath, dir, nunjucks: envWithFilters };
 }

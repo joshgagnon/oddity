@@ -16,9 +16,6 @@ const nunjucksEnviroments = {
     gc: nunjucksEnvFactory('good-companies-templates')
 };
 
-
-const DEFAULT_BASE_DOCUMENT_NAME = 'default.odt';
-
 module.exports = function(config) {
     const port = config.server_port || 3000;
 
@@ -38,9 +35,7 @@ module.exports = function(config) {
             const filetype = req.body.values.fileType;
             const filename = !!req.body.values.filename ? req.body.values.filename : req.body.formName;
 
-            const baseDocPath = path.join(env.baseDocsDir, DEFAULT_BASE_DOCUMENT_NAME);
-
-            packZip(baseDocPath, renderedContentXml).then((odt) => {
+            packZip(env.defaultBaseDocPath, renderedContentXml).then((odt) => {
                 if (filetype != 'odt') {
                     // File needs converted
                     convert(odt, filename, filetype)
