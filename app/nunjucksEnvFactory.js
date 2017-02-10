@@ -22,13 +22,18 @@ function filterise(env) {
     const joinAnd = function(items, attribute) {
         let result = '';
 
+        // Get the value of an item - if there is an attribute specified, we need to use that as the key for the item
+        function getValue(item) {
+            return attribute ? item[attribute] : item;
+        }
+
         // If two items, just return them with the word and in-between
         if (items.length == 2) {
-            return items[0] + ' and ' + items[1];
+            return getValue(items[0]() + ' and ' + getValue(items[1]);
         }
 
         items.map((item, index) => {
-            item = attribute ? item[attribute] : item;
+            item = getValue(item);
 
             if (index == 0) {
                 result = item;
