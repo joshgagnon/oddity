@@ -15,17 +15,17 @@ function filterise(env) {
         return moment(date).format('h:mm a');
     }
 
+    // Get the value of an item - if there is an attribute specified, we need to use that as the key for the item
+    const getValue = function (item, attribute) {
+        return attribute ? item[attribute] : item;
+    }
+
     // Take a list of items and format them in a string
     // item one
     // item one and item two
     // item one, item two, and item three
     const joinAnd = function(items, attribute) {
         let result = '';
-
-        // Get the value of an item - if there is an attribute specified, we need to use that as the key for the item
-        function getValue(item) {
-            return attribute ? item[attribute] : item;
-        }
 
         // If two items, just return them with the word and in-between
         if (items.length == 2) {
@@ -62,6 +62,7 @@ function filterise(env) {
     env.addFilter('timestamp_to_date', timestampToDate);
     env.addFilter('timestamp_to_time', timestampToTime);
     env.addFilter('join_and', joinAnd);
+    env.addFilter('get_value', getValue);
     env.addFilter('exists', exists);
 
     return env;
