@@ -23,6 +23,8 @@ module.exports = function(config) {
         console.log('Node server running at localhost:' + port);
     });
 
+    app.use(express.static('static'));
+
     app.post('/render', function (req, res) {
         let env;
 
