@@ -16,6 +16,7 @@ const nunjucksEnviroments = {
     gc: nunjucksEnvFactory('good-companies-templates')
 };
 
+
 module.exports = function(config) {
     const port = config.server_port || 3000;
 
@@ -23,7 +24,9 @@ module.exports = function(config) {
         console.log('Node server running at localhost:' + port);
     });
 
-    app.use(express.static('static'));
+    app.get('/status', function(req, res) {
+        res.sendFile(__dirname + "/static/" + "status.html");
+    })
 
     app.post('/render', function (req, res) {
         let env;
