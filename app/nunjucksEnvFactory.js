@@ -29,11 +29,11 @@ function filterise(env) {
 
         // If two items, just return them with the word and in-between
         if (items.length == 2) {
-            return getValue(items[0]) + ' and ' + getValue(items[1]);
+            return getValue(items[0], attribute) + ' and ' + getValue(items[1], attribute);
         }
 
         items.map((item, index) => {
-            item = getValue(item);
+            item = getValue(item, attribute);
 
             if (index == 0) {
                 result = item;
