@@ -36,7 +36,12 @@ module.exports = function(config) {
         }
 
         if (env) {
-            const renderedContentXml = env.nunjucks.render(req.body.formName + '.njk', req.body.values);
+
+            const receivedJson = JSON.stringify(req.body.values);
+            const jsonWithReplacedNewlines = receivedJson.replace(/\n/g, '<text:line-break/>');
+
+            // const renderedContentXml = env.nunjucks.render(req.body.formName + '.njk', req.body.values);
+            const renderedContentXml = env.nunjucks.render(req.body.formName + '.njk', JSON.parse(jsonWithReplacedNewlines));
             const filetype = req.body.values.fileType;
             const filename = !!req.body.values.filename ? req.body.values.filename : req.body.formName;
 

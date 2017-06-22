@@ -20,6 +20,10 @@ function filterise(env) {
         return attribute ? item[attribute] : item;
     }
 
+    const replaceNewlines = function (text, replacement) {
+        return text.replace(/\n/g, replacement);
+    }
+
     // Take a list of items and format them in a string
     // item one
     // item one and item two
@@ -64,6 +68,7 @@ function filterise(env) {
     env.addFilter('join_and', joinAnd);
     env.addFilter('get_value', getValue);
     env.addFilter('exists', exists);
+    env.addFilter('replace_newlines', replaceNewlines);
 
     return env;
 }
