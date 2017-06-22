@@ -20,6 +20,10 @@ function filterise(env) {
         return attribute ? item[attribute] : item;
     }
 
+    const prepend = function(list, value) {
+        return [value].concat(list);
+    }
+
     // Take a list of items and format them in a string
     // item one
     // item one and item two
@@ -64,6 +68,7 @@ function filterise(env) {
     env.addFilter('join_and', joinAnd);
     env.addFilter('get_value', getValue);
     env.addFilter('exists', exists);
+    env.addFilter('prepend', prepend);
 
     return env;
 }
