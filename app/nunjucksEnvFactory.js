@@ -73,6 +73,7 @@ function filterise(env) {
     return env;
 }
 
+
 const DEFAULT_BASE_DOCUMENT_NAME = 'default.odt';
 
 module.exports = function(directory) {
@@ -84,6 +85,6 @@ module.exports = function(directory) {
     const envLoader = new nunjucks.FileSystemLoader(dir, { autoescape: true });
     const env = new nunjucks.Environment(envLoader);
     const envWithFilters = filterise(env);
-    
+
     return { baseDocsDir, defaultBaseDocPath, dir, nunjucks: envWithFilters };
 }

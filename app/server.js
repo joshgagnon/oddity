@@ -16,6 +16,33 @@ const nunjucksEnviroments = {
     gc: nunjucksEnvFactory('good-companies-templates')
 };
 
+const Ancillary = new function() {
+    let _ancillary = {
+        images: []
+    }
+
+    function addAncillary(env, use){
+        _ancillary = {
+            images:[]
+        }
+        env.addGlobal('useDataImage', () => {
+            return use;
+        });
+        env.addGlobal('addDataImage', (data) => {
+            const index = _ancillary.images.length;
+            _ancillary.images.push(data);
+            return index;
+        });
+    }
+
+    function getAncillary(){
+        return _ancillary;
+    }
+    this.add = addAncillary;
+    this.get = getAncillary;
+ }()
+
+
 
 module.exports = function(config) {
     const port = config.server_port || 3000;
@@ -36,10 +63,24 @@ module.exports = function(config) {
         }
 
         if (env) {
+            const embedMetadata = req.body.embedMetadata;
+
             const filetype = req.body.values.fileType;
             const filename = !!req.body.values.filename ? req.body.values.filename : req.body.formName;
-            env.nunjucks.render(req.body.formName + '.njk', req.body.values)
-            .then(renderedContentXml => packZip(env.defaultBaseDocPath, renderedContentXml))
+            Ancillary.add(env.nunjucks, embedMetadata);
+
+
+            env.nunjucks.renderAsync(req.body.formName + '.njk', req.body.values )
+            .then(renderedContentXml => {
+                const ancillary = Ancillary.get();
+                if(embedMetadata &&  ancillary.images.length){
+                    return Promise.all(ancillary.images.map(encodeImage))
+                        .then((images) => {
+                            return packZip(env.defaultBaseDocPath, renderedContentXml, images, env)
+                        })
+                }
+                return packZip(env.defaultBaseDocPath, renderedContentXml)
+            })
             .then((odt) => {
                 if (filetype != 'odt') {
                     // File needs converted
@@ -47,7 +88,6 @@ module.exports = function(config) {
                         .then((response) => {
                             res.set('Content-Type', response.headers.get('Content-Type'));
                             res.set('Content-Disposition', response.headers.get('Content-Disposition'));
-
                             response.body
                                 .on('data', chunk => res.write(chunk))
                                 .on('end', chunk => res.end());
@@ -79,17 +119,36 @@ module.exports = function(config) {
             method: 'POST',
             header: {
                 'Accept': '*/*',
-                'Content-type': 'multipart/form-data'
+                'Content-Type': 'multipart/form-data'
             },
             body: form
         });
     }
 
-    function packZip(baseDocPath, contentXml) {
+    function encodeImage(data) {
+        return fetch(config.encode_url, {
+            method: 'POST',
+            header: {
+                'Accept': '*/*',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(res => {
+            return res.buffer()
+        })
+
+    }
+
+    function packZip(baseDocPath, contentXml, images, env) {
         return fs.readFileAsync(baseDocPath)
             .then((odt) => {
                 return JSZip.loadAsync(odt)
                     .then((zip) => {
+                        if(images){
+                            images.map((image, i) => zip.file('Pictures/'+i+'.png', image));
+                            zip.file('META-INF/manifest.xml', env.nunjucks.render('manifest.njk', {images: images.map((image, i) => i)}));
+                        }
                         zip.file('content.xml', contentXml);
                         return zip.generateAsync({type: 'nodebuffer'});
                     });
