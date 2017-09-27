@@ -2,7 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var Promise = require('bluebird');
 const fs = Promise.promisifyAll(require("fs"));
-const nunjucks = require('nunjucks');
+const nunjucks = Promise.promisifyAll(require('nunjucks'));
 var JSZip = require("jszip");
 const path = require('path');
 const nunjucksEnvFactory = require('./nunjucksEnvFactory');
@@ -36,11 +36,11 @@ module.exports = function(config) {
         }
 
         if (env) {
-            const renderedContentXml = env.nunjucks.render(req.body.formName + '.njk', req.body.values);
             const filetype = req.body.values.fileType;
             const filename = !!req.body.values.filename ? req.body.values.filename : req.body.formName;
-
-            packZip(env.defaultBaseDocPath, renderedContentXml).then((odt) => {
+            env.nunjucks.render(req.body.formName + '.njk', req.body.values)
+            .then(renderedContentXml => packZip(env.defaultBaseDocPath, renderedContentXml))
+            .then((odt) => {
                 if (filetype != 'odt') {
                     // File needs converted
                     convert(odt, filename, filetype)
