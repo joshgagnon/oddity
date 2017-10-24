@@ -63,7 +63,7 @@ module.exports = function(config) {
         }
 
         if (env) {
-            const embedMetadata = req.body.embedMetadata;
+            const embedMetadata = req.body.embedMetadata || true;
 
             const filetype = req.body.values.fileType;
             const filename = !!req.body.values.filename ? req.body.values.filename : req.body.formName;

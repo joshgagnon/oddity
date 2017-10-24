@@ -17,6 +17,12 @@ function filterise(env) {
 
     // Get the value of an item - if there is an attribute specified, we need to use that as the key for the item
     const getValue = function (item, attribute) {
+        if(Array.isArray(attribute)){
+            if(attribute.length > 1){
+                return getValue(item[attribute[0]], attribute.slice(1));
+            }
+            attribute = attribute[0];
+        }
         return attribute ? item[attribute] : item;
     }
 
