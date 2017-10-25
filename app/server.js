@@ -57,13 +57,12 @@ module.exports = function(config) {
 
     app.post('/render', function (req, res) {
         let env;
-
         if (!!req.body.goodCompaniesTemplate) {
             env = nunjucksEnviroments.gc;
         }
 
         if (env) {
-            const embedMetadata = req.body.embedMetadata || true;
+            const embedMetadata = req.body.embedMetadata || false;
 
             const filetype = req.body.values.fileType;
             const filename = !!req.body.values.filename ? req.body.values.filename : req.body.formName;
@@ -93,7 +92,8 @@ module.exports = function(config) {
                                 .on('end', chunk => res.end());
                         })
                         .catch(e => {
-                            res.serverError(e);
+                            console.log(e);
+                            res.status(500).send({message: 'failed to render', error: e});
                         });
                 } else {
                     // User wants ODT, so file doesn't need converted
@@ -101,7 +101,11 @@ module.exports = function(config) {
                     res.set('Content-Disposition', 'attachment; filename=' + filename + '.odt');
                     res.end(odt, 'binary');
                 }
-            });
+            })
+            .catch((e) => {
+                console.log(e);
+                res.status(500).send({message: 'failed to render', error: e});
+            })
         } else {
             res.set('Content-Type', 'application/json');
             res.status(400);
