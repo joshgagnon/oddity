@@ -10,7 +10,7 @@ const fetch = require('node-fetch');
 const FormData = require('form-data')
 
 var app = express();
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '50mb'}));
 
 const nunjucksEnviroments = {
     gc: nunjucksEnvFactory('good-companies-templates')
@@ -63,22 +63,22 @@ module.exports = function(config) {
 
         if (env) {
             const embedMetadata = req.body.embedMetadata || false;
-
+            const logo = req.body.metadata.logo;
+            const namedImages = logo ? [{name: 'logo', data: Buffer.from(logo, 'base64')}] : null;
             const filetype = req.body.values.fileType;
             const filename = !!req.body.values.filename ? req.body.values.filename : req.body.formName;
             Ancillary.add(env.nunjucks, embedMetadata);
-
-
-            env.nunjucks.renderAsync(req.body.formName + '.njk', req.body.values )
+            env.nunjucks.renderAsync(req.body.formName + '.njk', Object.assign({}, req.body.values, {metadata: req.body.metadata}) )
             .then(renderedContentXml => {
                 const ancillary = Ancillary.get();
                 if(embedMetadata &&  ancillary.images.length){
                     return Promise.all(ancillary.images.map(encodeImage))
                         .then((images) => {
-                            return packZip(env.defaultBaseDocPath, renderedContentXml, images, env)
+                            return packZip(env.defaultBaseDocPath, renderedContentXml, images, namedImages, env)
                         })
                 }
-                return packZip(env.defaultBaseDocPath, renderedContentXml)
+
+                return packZip(env.defaultBaseDocPath, renderedContentXml, null, namedImages, env)
             })
             .then((odt) => {
                 if (filetype != 'odt') {
@@ -144,7 +144,7 @@ module.exports = function(config) {
 
     }
 
-    function packZip(baseDocPath, contentXml, images, env) {
+    function packZip(baseDocPath, contentXml, images, namedImages, env) {
         return fs.readFileAsync(baseDocPath)
             .then((odt) => {
                 return JSZip.loadAsync(odt)
@@ -153,6 +153,11 @@ module.exports = function(config) {
                             images.map((image, i) => zip.file('Pictures/'+i+'.png', image));
                             zip.file('META-INF/manifest.xml', env.nunjucks.render('manifest.njk', {images: images.map((image, i) => i)}));
                         }
+                        if(namedImages){
+                            namedImages.map((image) => zip.file('Pictures/'+image.name+'.png', image.data));
+                            zip.file('META-INF/manifest.xml', env.nunjucks.render('manifest.njk', {images: namedImages.map((image, i) => image.name)}));
+                        }
+
                         zip.file('content.xml', contentXml);
                         return zip.generateAsync({type: 'nodebuffer'});
                     });
