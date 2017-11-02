@@ -45,10 +45,9 @@ const Ancillary = new function() {
 
 
 function fromBase64(b64string){
-    if (typeof Buffer.from === "function") {
-        // Node 5.10+
+    try{
         buf = Buffer.from(b64string, 'base64'); // Ta-da
-    } else {
+    }catch(e){
         // older Node versions
         buf = new Buffer(b64string, 'base64'); // Ta-da
     }
