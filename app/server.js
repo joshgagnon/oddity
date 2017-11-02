@@ -44,6 +44,17 @@ const Ancillary = new function() {
 
 
 
+function fromBase64(b64string){
+    if (typeof Buffer.from === "function") {
+        // Node 5.10+
+        buf = Buffer.from(b64string, 'base64'); // Ta-da
+    } else {
+        // older Node versions
+        buf = new Buffer(b64string, 'base64'); // Ta-da
+    }
+    return buf;
+}
+
 module.exports = function(config) {
     const port = config.server_port || 3000;
 
@@ -64,7 +75,7 @@ module.exports = function(config) {
         if (env) {
             const embedMetadata = req.body.embedMetadata || false;
             const logo = req.body.metadata.logo;
-            const namedImages = logo ? [{name: 'logo', data: Buffer.from(logo, 'base64')}] : null;
+            const namedImages = logo ? [{name: 'logo', data: fromBase64(logo)}] : null;
             const filetype = req.body.values.fileType;
             const filename = !!req.body.values.filename ? req.body.values.filename : req.body.formName;
             Ancillary.add(env.nunjucks, embedMetadata);
