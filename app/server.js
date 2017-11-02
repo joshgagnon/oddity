@@ -45,6 +45,7 @@ const Ancillary = new function() {
 
 
 function fromBase64(b64string){
+    let buf;
     try{
         buf = Buffer.from(b64string, 'base64'); // Ta-da
     }catch(e){
