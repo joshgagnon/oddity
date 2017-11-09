@@ -76,8 +76,8 @@ module.exports = function(config) {
             const embedMetadata = req.body.embedMetadata || false;
             const logo = req.body.metadata.logo;
             const namedImages = logo ? [{name: 'logo', data: fromBase64(logo)}] : null;
-            const filetype = req.body.values.fileType;
-            const filename = !!req.body.values.filename ? req.body.values.filename : req.body.formName;
+            const filetype = req.body.fileType || 'pdf';
+            const filename = !!req.body.filename ? req.body.filename : req.body.formName;
             Ancillary.add(env.nunjucks, embedMetadata);
             env.nunjucks.renderAsync(req.body.formName + '.njk', Object.assign({}, req.body.values, {metadata: req.body.metadata}) )
             .then(renderedContentXml => {
