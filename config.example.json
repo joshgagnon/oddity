@@ -1,5 +1,5 @@
 {
     "server_port": 5671,
     "convert_url": "https://convert.catalex.nz/convert",
-    "encode_url": "http://localhost:5668/encode",
+    "encode_url": "http://localhost:5668/encode"
 }
