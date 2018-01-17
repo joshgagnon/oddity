@@ -28,6 +28,9 @@ module.exports = function(config) {
         if (!!req.body.goodCompaniesTemplate) {
             env = nunjucksEnviroments.gc;
         }
+        else{
+            env = nunjucksEnviroments[req.body.env];
+        }
         const filetype = req.body.fileType || 'pdf';
         const filename = !!req.body.filename ? req.body.filename : req.body.formName;
         if (env) {
@@ -60,8 +63,7 @@ module.exports = function(config) {
             })
         } else {
             res.set('Content-Type', 'application/json');
-            res.status(400);
-            res.end('Error: unknown service');
+            res.status(400).send({message: 'Error: unknown service'});
         }
     });
 
