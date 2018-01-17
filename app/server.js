@@ -28,8 +28,11 @@ module.exports = function(config) {
         if (!!req.body.goodCompaniesTemplate) {
             env = nunjucksEnviroments.gc;
         }
-        else{
+        else if(req.body.env){
             env = nunjucksEnviroments[req.body.env];
+        }
+        else {
+            env = nunjucksEnviroments.el;
         }
         const filetype = req.body.fileType || 'pdf';
         const filename = !!req.body.filename ? req.body.filename : req.body.formName;
