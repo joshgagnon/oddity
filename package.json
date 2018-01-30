@@ -8,7 +8,7 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/paddymoran/convert_v2"
+    "url": "https://github.com/joshgagnon/oddity"
   },
   "scripts": {
     "test": "./node_modules/.bin/mocha --recursive test"
@@ -26,6 +26,7 @@
     "express": "^4.14.0",
     "form-data": "^2.1.2",
     "good-companies-templates": "github:joshgagnon/good-companies-templates",
+    "court-costs-templates": "github:joshgagnon/court-costs-templates",
     "el-templates": "github:joshgagnon/el-templates",
     "jszip": "^3.1.3",
     "moment": "^2.17.1",

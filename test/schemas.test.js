@@ -31,7 +31,10 @@ describe('Schemas are valid JSON', function() {
                         console.log(file.filename, ' failed');
                         throw e;
                     }
-                }));
+                }))
+                .catch(e => {
+                    // swallow, don't need schemas
+                })
             })
     });
 });

@@ -1,4 +1,5 @@
 {
     "gc": "good-companies-templates",
-    "el": "el-templates"
+    "el": "el-templates",
+    "cc": "court-costs-templates"
 }

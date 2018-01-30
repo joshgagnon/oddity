@@ -60,7 +60,10 @@ function fromBase64(b64string){
                         return zip.generateAsync({type: 'nodebuffer'});
                     });
             })
-            .catch(error => console.log(error));
+            .catch(error => {
+                console.log(error);
+                throw error;
+            });
     }
 
 module.exports = function render(env, body){
