@@ -37,6 +37,9 @@ describe('Test rendering for schemas with test data', function() {
                                 data = JSON.parse(_data)
                                 return render(envs[schemaMap[schema]], {values: data, formName: folder})
                             })
+                            .then(zip => {
+                                return fs.writeFileAsync('/tmp/'+filename+'.odt', zip)
+                            })
                         )
                     )
                 ))
