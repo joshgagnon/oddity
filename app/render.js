@@ -57,7 +57,11 @@ function fromBase64(b64string){
                         }
 
                         zip.file('content.xml', contentXml);
-                        return zip.generateAsync({type: 'nodebuffer'});
+                        return zip.generateAsync({
+                            type: 'nodebuffer',
+                            platform: "UNIX",
+                            compression: "DEFLATE"
+                        });
                     });
             })
             .catch(error => {
