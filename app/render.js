@@ -75,6 +75,7 @@ module.exports = function render(env, body){
     const logo = (body.metadata || {}).logo;
     const namedImages = logo ? [{name: 'logo', data: fromBase64(logo)}] : null;
     Ancillary.add(env.nunjucks, embedMetadata);
+    console.log("rendering: ", body.formName)
     return env.nunjucks.renderAsync(body.formName + '.njk', Object.assign({}, body.values, {metadata: body.metadata}) )
     .then(renderedContentXml => {
         const ancillary = Ancillary.get();
