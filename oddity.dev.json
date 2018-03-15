@@ -1,0 +1,10 @@
+    {
+    "apps" : [{
+                "watch": true,
+
+         "ignore_watch" : [],
+        "name": "oddity",
+        "ignore_watch" : [],
+        "script": "server.js"
+    }]
+}
