@@ -2,7 +2,7 @@ const Promise = require('bluebird');
 const fs = Promise.promisifyAll(require("fs"));
 const JSZip = require("jszip");
 const nunjucks = Promise.promisifyAll(require('nunjucks'));
-
+const sanitize = require("sanitize-filename")
 const Ancillary = new function() {
     let _ancillary = {
         images: []
@@ -42,7 +42,7 @@ function fromBase64(b64string){
     return buf;
 }
 
-    function packZip(baseDocPath, contentXml, images, namedImages, env) {
+    function packZip(formName, baseDocPath, contentXml, images, namedImages, env) {
         return fs.readFileAsync(baseDocPath)
             .then((odt) => {
                 return JSZip.loadAsync(odt)
@@ -55,8 +55,14 @@ function fromBase64(b64string){
                             namedImages.map((image) => zip.file('Pictures/'+image.name+'.png', image.data));
                             zip.file('META-INF/manifest.xml', env.nunjucks.render('manifest.njk', {images: namedImages.map((image, i) => image.name)}));
                         }
-
+                        try{
+                            zip.file('META-INF/styles.xml', env.nunjucks.render('styles/' + formName + '.njk'));
+                        }
+                        catch(e) {
+                            // no style file
+                        }
                         zip.file('content.xml', contentXml);
+
                         return zip.generateAsync({
                             type: 'nodebuffer',
                             platform: "UNIX",
@@ -75,17 +81,19 @@ module.exports = function render(env, body){
     const logo = (body.metadata || {}).logo;
     const namedImages = logo ? [{name: 'logo', data: fromBase64(logo)}] : null;
     Ancillary.add(env.nunjucks, embedMetadata);
-    console.log("rendering: ", body.formName)
-    return env.nunjucks.renderAsync(body.formName + '.njk', Object.assign({}, body.values, {metadata: body.metadata}) )
+    const formName = sanitize(body.formName);
+    console.log("rendering: ", formName)
+
+    return env.nunjucks.renderAsync(formName + '.njk', Object.assign({}, body.values, {metadata: body.metadata}) )
     .then(renderedContentXml => {
         const ancillary = Ancillary.get();
         if(embedMetadata &&  ancillary.images.length){
             return Promise.all(ancillary.images.map(encodeImage))
                 .then((images) => {
-                    return packZip(env.defaultBaseDocPath, renderedContentXml, images, namedImages, env)
+                    return packZip(formName, env.defaultBaseDocPath, renderedContentXml, images, namedImages, env)
                 })
         }
 
-        return packZip(env.defaultBaseDocPath, renderedContentXml, null, namedImages, env)
+        return packZip(formName, env.defaultBaseDocPath, renderedContentXml, null, namedImages, env)
     })
 }
