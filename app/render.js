@@ -56,7 +56,7 @@ function fromBase64(b64string){
                             zip.file('META-INF/manifest.xml', env.nunjucks.render('manifest.njk', {images: namedImages.map((image, i) => image.name)}));
                         }
                         try{
-                            zip.file('META-INF/styles.xml', env.nunjucks.render('styles/' + formName + '.njk'));
+                            zip.file('styles.xml', env.nunjucks.render('styles/' + formName + '.njk'));
                         }
                         catch(e) {
                             // no style file
