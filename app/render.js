@@ -3,6 +3,9 @@ const fs = Promise.promisifyAll(require("fs"));
 const JSZip = require("jszip");
 const nunjucks = Promise.promisifyAll(require('nunjucks'));
 const sanitize = require("sanitize-filename")
+const path = require('path');
+
+
 const Ancillary = new function() {
     let _ancillary = {
         images: []
@@ -82,18 +85,27 @@ module.exports = function render(env, body){
     const namedImages = logo ? [{name: 'logo', data: fromBase64(logo)}] : null;
     Ancillary.add(env.nunjucks, embedMetadata);
     const formName = sanitize(body.formName);
-    console.log("rendering: ", formName)
+    let baseDoc = env.defaultBaseDocPath;
 
+    console.log("rendering: ", formName)
+    let defaultBaseDocPath = env.defaultBaseDocPath;
+    // check there is a specific base doc for this file
+
+    if(fs.existsSync(path.join(env.baseDocsDir, formName + '.odt'))){
+        defaultBaseDocPath = path.join(env.baseDocsDir, formName + '.odt');
+    }
+
+    console.log('using base doc', defaultBaseDocPath)
     return env.nunjucks.renderAsync(formName + '.njk', Object.assign({}, body.values, {metadata: body.metadata}) )
     .then(renderedContentXml => {
         const ancillary = Ancillary.get();
         if(embedMetadata &&  ancillary.images.length){
             return Promise.all(ancillary.images.map(encodeImage))
                 .then((images) => {
-                    return packZip(formName, env.defaultBaseDocPath, renderedContentXml, images, namedImages, env)
+                    return packZip(formName, defaultBaseDocPath, renderedContentXml, images, namedImages, env)
                 })
         }
 
-        return packZip(formName, env.defaultBaseDocPath, renderedContentXml, null, namedImages, env)
+        return packZip(formName, defaultBaseDocPath, renderedContentXml, null, namedImages, env)
     })
 }
