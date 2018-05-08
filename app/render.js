@@ -89,23 +89,25 @@ module.exports = function render(env, body){
 
     console.log("rendering: ", formName)
     let defaultBaseDocPath = env.defaultBaseDocPath;
-    // check there is a specific base doc for this file
 
-    if(fs.existsSync(path.join(env.baseDocsDir, formName + '.odt'))){
-        defaultBaseDocPath = path.join(env.baseDocsDir, formName + '.odt');
-    }
+    return fs.readFileAsync(path.join(env.schemaDir, formName + '.json'))
+        .then((file) => {
+            const schema = JSON.parse(file);
+            if(schema.baseDoc){
+                defaultBaseDocPath = path.join(env.baseDocsDir, schema.baseDoc);
+            }
+            console.log('using base doc', defaultBaseDocPath)
+            return env.nunjucks.renderAsync(formName + '.njk', Object.assign({}, body.values, {metadata: body.metadata}) )
+        })
+        .then(renderedContentXml => {
+            const ancillary = Ancillary.get();
+            if(embedMetadata &&  ancillary.images.length){
+                return Promise.all(ancillary.images.map(encodeImage))
+                    .then((images) => {
+                        return packZip(formName, defaultBaseDocPath, renderedContentXml, images, namedImages, env)
+                    })
+            }
 
-    console.log('using base doc', defaultBaseDocPath)
-    return env.nunjucks.renderAsync(formName + '.njk', Object.assign({}, body.values, {metadata: body.metadata}) )
-    .then(renderedContentXml => {
-        const ancillary = Ancillary.get();
-        if(embedMetadata &&  ancillary.images.length){
-            return Promise.all(ancillary.images.map(encodeImage))
-                .then((images) => {
-                    return packZip(formName, defaultBaseDocPath, renderedContentXml, images, namedImages, env)
-                })
-        }
-
-        return packZip(formName, defaultBaseDocPath, renderedContentXml, null, namedImages, env)
-    })
+            return packZip(formName, defaultBaseDocPath, renderedContentXml, null, namedImages, env)
+        })
 }

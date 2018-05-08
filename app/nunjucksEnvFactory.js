@@ -58,6 +58,15 @@ function filterise(env) {
         return result;
     }
 
+    const concat = function(items, attributes) {
+        return items.map(item => {
+            return attributes.map(attr => {
+                return item[attr]
+            }).join(' ');
+        })
+    }
+
+
     const exists = function(list, attribute, value) {
         for (let index = 0; index < list.length; index++) {
             if (list[index][attribute] && list[index][attribute] == value) {
@@ -72,6 +81,7 @@ function filterise(env) {
     env.addFilter('timestamp_to_date', timestampToDate);
     env.addFilter('timestamp_to_time', timestampToTime);
     env.addFilter('join_and', joinAnd);
+    env.addFilter('concat', concat);
     env.addFilter('get_value', getValue);
     env.addFilter('exists', exists);
     env.addFilter('prepend', prepend);
@@ -85,11 +95,12 @@ const DEFAULT_BASE_DOCUMENT_NAME = 'default.odt';
 module.exports = function(directory) {
     const dir = path.join(__dirname + '/../node_modules/', directory, '/templates/');
     const baseDocsDir = path.join(dir, '../base_documents/');
+    const schemaDir = path.join(dir, '../schemas/');
     const defaultBaseDocPath = path.join(baseDocsDir, DEFAULT_BASE_DOCUMENT_NAME);
 
     const envLoader = new nunjucks.FileSystemLoader(dir, { autoescape: true });
     const env = new nunjucks.Environment(envLoader);
     const envWithFilters = filterise(env);
 
-    return { baseDocsDir, defaultBaseDocPath, dir, nunjucks: envWithFilters };
+    return { baseDocsDir, schemaDir, defaultBaseDocPath, dir, nunjucks: envWithFilters };
 }
