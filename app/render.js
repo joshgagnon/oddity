@@ -99,7 +99,7 @@ module.exports = function render(env, body){
             console.log('using base doc', defaultBaseDocPath)
             return env.nunjucks.renderAsync(formName + '.njk', Object.assign({}, body.values, {metadata: body.metadata}) )
         })
-        .then(renderedContentXml => {
+        .finally(renderedContentXml => {
             const ancillary = Ancillary.get();
             if(embedMetadata &&  ancillary.images.length){
                 return Promise.all(ancillary.images.map(encodeImage))
