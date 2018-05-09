@@ -90,16 +90,16 @@ module.exports = function render(env, body){
     console.log("rendering: ", formName)
     let defaultBaseDocPath = env.defaultBaseDocPath;
 
-    return fs.readFileAsync(path.join(env.schemaDir, formName + '.json'))
-        .then((file) => {
+    //return fs.readFileAsync(path.join(env.schemaDir, formName + '.json'))
+    //    .finally((file) => {
             const schema = JSON.parse(file);
             if(schema.baseDoc){
                 defaultBaseDocPath = path.join(env.baseDocsDir, schema.baseDoc);
             }
             console.log('using base doc', defaultBaseDocPath)
             return env.nunjucks.renderAsync(formName + '.njk', Object.assign({}, body.values, {metadata: body.metadata}) )
-        })
-        .finally(renderedContentXml => {
+      // })
+        .then(renderedContentXml => {
             const ancillary = Ancillary.get();
             if(embedMetadata &&  ancillary.images.length){
                 return Promise.all(ancillary.images.map(encodeImage))
