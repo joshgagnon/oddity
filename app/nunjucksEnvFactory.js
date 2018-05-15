@@ -61,7 +61,15 @@ function filterise(env) {
     const concat = function(items, attributes) {
         return items.map(item => {
             return attributes.map(attr => {
-                return item[attr]
+                let thisItem = item;
+                if(Array.isArray(attr)){
+                    console.log(thisItem, attr)
+                    attr.map(a => {
+                        thisItem = thisItem[a];
+                    });
+                    attr = attr[attr.length - 1];
+                }
+                return thisItem[attr];
             }).join(' ');
         })
     }
