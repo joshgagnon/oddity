@@ -4,7 +4,7 @@ const JSZip = require("jszip");
 const nunjucks = Promise.promisifyAll(require('nunjucks'));
 const sanitize = require("sanitize-filename")
 const path = require('path');
-
+const moment = require('moment')
 
 const Ancillary = new function() {
     let _ancillary = {
@@ -89,20 +89,11 @@ module.exports = function render(env, body){
 
     console.log("rendering: ", formName)
     let defaultBaseDocPath = env.defaultBaseDocPath;
-    let mappings = {};
-    return fs.readFileAsync(path.join(env.schemaDir, formName + '.json'))
-        .then((file) => {
-            const schema = JSON.parse(file);
-            if(schema.baseDoc){
-                defaultBaseDocPath = path.join(env.baseDocsDir, schema.baseDoc);
-            }
-            mappings = schema.mappings || {};
-        })
-        .catch(e => {})
-        .then(() => {
-            console.log('using base doc', defaultBaseDocPath);
-            return env.nunjucks.renderAsync(formName + '.njk', Object.assign({}, body.values, {metadata: body.metadata, mappings: mappings}) )
-       })
+    console.log('using base doc', defaultBaseDocPath);
+
+    const mappings = (env.schemas[formName] || {}).mappings || {};
+    const values = Object.assign({}, body.values, (env.calculations[formName] || function(){return {}}) (body.values, {moment}));
+    return env.nunjucks.renderAsync(formName + '.njk', Object.assign({}, values, {metadata: body.metadata, mappings: mappings}) )
         .then(renderedContentXml => {
             const ancillary = Ancillary.get();
             if(embedMetadata &&  ancillary.images.length){

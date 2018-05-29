@@ -66,7 +66,6 @@ function filterise(env) {
             return attributes.map(attr => {
                 let thisItem = item;
                 if(Array.isArray(attr)){
-                    console.log(thisItem, attr)
                     attr.map(a => {
                         thisItem = thisItem[a];
                     });
@@ -136,36 +135,41 @@ function recurse(dir) {
 }
 
 function schemasAndCalculations(dir) {
-    const schemas = recurse(path.join(dir, 'schemas'))
+
+    const base = dir
+    const calculationPath = path.join(dir, 'calculations');
+    const schemasPath = path.join(dir, 'schemas');
+    const schemas = recurse(schemasPath)
         .then(files => {
             return Promise.reduce(files, (acc, file) => {
                 if(file.endsWith('.json')){
                     return fs.readFileAsync(file)
                         .then(text => {
-                            acc[file] = JSON.parse(text);
+                            const json = JSON.parse(text);
+                            acc[json.formName || file.replace(schemasPath+'/', '').replace('.json', '')] = json;
                             return acc;
                         });
                 }
                 return acc;
             }, [])
-        });
-    const calculations = recurse(path.join(dir, 'calculations'))
+        })
+        .catch(() => {})
+    const calculations = recurse(calculationPath)
         .then(files => {
             return Promise.reduce(files, (acc, file) => {
                 if(file.endsWith('.js')){
-                    file = file.slice(module.length - 3);
                     const js =  require(file);
-                    acc[file] = js;
+                    acc[file.replace(calculationPath + '/', '').replace('.js', '')] = js;
                 }
                 return acc;
             }, [])
-        });
+        })
+        .catch(() => {})
     return Promise.all([schemas, calculations])
         .spread((schemas, calculations) => {
             return {schemas, calculations};
         })
         .catch(e => {
-            console.log(e)
             return {schemas: {}, calculations: {}}
         })
 }
@@ -181,8 +185,6 @@ module.exports = function(directory) {
     return Promise.all([schemasAndCalculations(base),
                        new nunjucks.FileSystemLoader(dir)])
         .spread(({schemas = {}, calculations = {}}, envLoader) => {
-            console.log(schemas)
-            console.log(calculations)
             const env = new nunjucks.Environment(envLoader);
             envWithFilters = filterise(env);
             return { baseDocsDir, schemaDir, defaultBaseDocPath, dir, nunjucks: envWithFilters, schemas, calculations };
