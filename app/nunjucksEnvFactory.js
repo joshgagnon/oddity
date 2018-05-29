@@ -1,6 +1,9 @@
 const path = require('path');
 const nunjucks = require('nunjucks');
 const moment = require('moment');
+const Promise = require('bluebird');
+const fs = Promise.promisifyAll(require("fs"));
+
 
 function filterise(env) {
     const date = function(date) {
@@ -103,22 +106,86 @@ function filterise(env) {
     env.addFilter('exists', exists);
     env.addFilter('prepend', prepend);
     env.addFilter('currency', currency);
-
     return env;
 }
 
 
 const DEFAULT_BASE_DOCUMENT_NAME = 'default.odt';
 
+function recurse(dir) {
+    const readDir = (dir) => {
+        return fs.readdirAsync(dir)
+            .then(files => {
+                return Promise.reduce(files, (acc, file) => {
+                    return fs.statAsync(path.join(dir, file))
+                        .then(stat => {
+                            if(stat.isDirectory()){
+                                return readDir(path.join(dir, file))
+                                    .then(results => {
+                                        acc = acc.concat(results);
+                                        return acc;
+                                    });
+                            }
+                            acc.push(path.join(dir, file))
+                            return acc;
+                        });
+                    }, [])
+                });
+            };
+        return readDir(dir);
+}
+
+function schemasAndCalculations(dir) {
+    const schemas = recurse(path.join(dir, 'schemas'))
+        .then(files => {
+            return Promise.reduce(files, (acc, file) => {
+                if(file.endsWith('.json')){
+                    return fs.readFileAsync(file)
+                        .then(text => {
+                            acc[file] = JSON.parse(text);
+                            return acc;
+                        });
+                }
+                return acc;
+            }, [])
+        });
+    const calculations = recurse(path.join(dir, 'calculations'))
+        .then(files => {
+            return Promise.reduce(files, (acc, file) => {
+                if(file.endsWith('.js')){
+                    file = file.slice(module.length - 3);
+                    const js =  require(file);
+                    acc[file] = js;
+                }
+                return acc;
+            }, [])
+        });
+    return Promise.all([schemas, calculations])
+        .spread((schemas, calculations) => {
+            return {schemas, calculations};
+        })
+        .catch(e => {
+            console.log(e)
+            return {schemas: {}, calculations: {}}
+        })
+}
+
 module.exports = function(directory) {
-    const dir = path.join(__dirname + '/../node_modules/', directory, '/templates/');
+    const base = path.join(__dirname + '/../node_modules/', directory);
+    const dir = path.join(base, '/templates/');
     const baseDocsDir = path.join(dir, '../base_documents/');
     const schemaDir = path.join(dir, '../schemas/');
-    const defaultBaseDocPath = path.join(baseDocsDir, DEFAULT_BASE_DOCUMENT_NAME);
+    const calculationDir = path.join(dir, '../schemas/');
+    let defaultBaseDocPath = path.join(baseDocsDir, DEFAULT_BASE_DOCUMENT_NAME);
+    let envWithFilters;
+    return Promise.all([schemasAndCalculations(base),
+                       new nunjucks.FileSystemLoader(dir)])
+        .spread(({schemas = {}, calculations = {}}, envLoader) => {
+            console.log(schemas)
+            console.log(calculations)
+            const env = new nunjucks.Environment(envLoader);
+            envWithFilters = filterise(env);
+            return { baseDocsDir, schemaDir, defaultBaseDocPath, dir, nunjucks: envWithFilters, schemas, calculations };
+        })
 
-    const envLoader = new nunjucks.FileSystemLoader(dir, { autoescape: true });
-    const env = new nunjucks.Environment(envLoader);
-    const envWithFilters = filterise(env);
-
-    return { baseDocsDir, schemaDir, defaultBaseDocPath, dir, nunjucks: envWithFilters };
 }

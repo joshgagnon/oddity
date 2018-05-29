@@ -100,7 +100,7 @@ module.exports = function render(env, body){
         })
         .catch(e => {})
         .then(() => {
-            console.log('using base doc', defaultBaseDocPath)
+            console.log('using base doc', defaultBaseDocPath);
             return env.nunjucks.renderAsync(formName + '.njk', Object.assign({}, body.values, {metadata: body.metadata, mappings: mappings}) )
        })
         .then(renderedContentXml => {

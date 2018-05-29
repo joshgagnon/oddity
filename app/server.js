@@ -41,7 +41,7 @@ module.exports = function(config) {
             .then((odt) => {
                 if (filetype != 'odt') {
                     // File needs converted
-                    convert(odt, filename, filetype)
+                    return convert(odt, filename, filetype)
                         .then((response) => {
                             res.set('Content-Type', response.headers.get('Content-Type'));
                             res.set('Content-Disposition', response.headers.get('Content-Disposition'));

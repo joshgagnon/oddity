@@ -7,10 +7,13 @@ module.exports = function getEnvironments() {
     return fs.readFileAsync(path.join(__dirname, '../environments.json'))
         .then((data) => {
             const obj =JSON.parse(data);
-            return Object.keys(obj).reduce((acc, key) => {
+            return Promise.reduce(Object.keys(obj), (acc, key) => {
                 console.log('Loading ', obj[key])
-                acc[key] = nunjucksEnvFactory(obj[key])
-                return acc;
+                return nunjucksEnvFactory(obj[key])
+                    .then(result => {
+                        acc[key] = result;
+                        return acc;
+                    });
             }, {});
         })
 }
