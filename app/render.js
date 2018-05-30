@@ -88,10 +88,12 @@ module.exports = function render(env, body){
     let baseDoc = env.defaultBaseDocPath;
 
     console.log("rendering: ", formName)
-    let defaultBaseDocPath = env.defaultBaseDocPath;
-    console.log('using base doc', defaultBaseDocPath);
-
     const mappings = (env.schemas[formName] || {}).mappings || {};
+    let defaultBaseDocPath = env.defaultBaseDocPath;
+    if(env.schemas[formName] && env.schemas[formName].baseDoc) {
+        defaultBaseDocPath = path.join(env.baseDocsDir, env.schemas[formName].baseDoc);
+    }
+    console.log('using base doc', defaultBaseDocPath);
     const values = Object.assign({}, body.values, (env.calculations[formName] || function(){return {}}) (body.values, {moment}));
     return env.nunjucks.renderAsync(formName + '.njk', Object.assign({}, values, {metadata: body.metadata, mappings: mappings}) )
         .then(renderedContentXml => {
