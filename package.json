@@ -25,6 +25,7 @@
     "body-parser": "^1.15.2",
     "chai": "^4.1.2",
     "court-costs-templates": "github:joshgagnon/court-costs-templates",
+    "deepmerge": "^2.1.1",
     "el-templates": "github:joshgagnon/el-templates",
     "express": "^4.14.0",
     "form-data": "^2.1.2",

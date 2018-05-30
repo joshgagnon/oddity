@@ -5,6 +5,8 @@ const nunjucks = Promise.promisifyAll(require('nunjucks'));
 const sanitize = require("sanitize-filename")
 const path = require('path');
 const moment = require('moment')
+const deepmerge = require('deepmerge');
+
 
 const Ancillary = new function() {
     let _ancillary = {
@@ -86,15 +88,19 @@ module.exports = function render(env, body){
     Ancillary.add(env.nunjucks, embedMetadata);
     const formName = sanitize(body.formName);
     let baseDoc = env.defaultBaseDocPath;
-
+    let values = body.values;
     console.log("rendering: ", formName)
     const mappings = (env.schemas[formName] || {}).mappings || {};
     let defaultBaseDocPath = env.defaultBaseDocPath;
     if(env.schemas[formName] && env.schemas[formName].baseDoc) {
         defaultBaseDocPath = path.join(env.baseDocsDir, env.schemas[formName].baseDoc);
     }
+    if(env.schemas[formName] && env.schemas[formName].calculations) {
+        env.schemas[formName].calculations.map(calc => {
+            values =  deepmerge(body.values, env.calculations[calc](values, {moment}));
+        });
+    }
     console.log('using base doc', defaultBaseDocPath);
-    const values = Object.assign({}, body.values, (env.calculations[formName] || function(){return {}}) (body.values, {moment}));
     return env.nunjucks.renderAsync(formName + '.njk', Object.assign({}, values, {metadata: body.metadata, mappings: mappings}) )
         .then(renderedContentXml => {
             const ancillary = Ancillary.get();
