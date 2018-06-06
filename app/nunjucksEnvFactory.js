@@ -90,6 +90,9 @@ function filterise(env) {
         if(!x) {
             return '$0.00';
         }
+        if(typeof x === 'string'){
+            x = x.replace(/[^-0-9.]+/g, '');
+        }
         x = parseFloat(x).toFixed(2);
         const parts = x.toString().split(".");
         parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -163,14 +166,15 @@ function schemasAndCalculations(dir) {
                     acc[file.replace(calculationPath + '/', '').replace('.js', '')] = js;
                 }
                 return acc;
-            }, [])
+            }, {})
         })
-        .catch(() => {})
+        .catch((e) => {console.log(e);})
     return Promise.all([schemas, calculations])
         .spread((schemas, calculations) => {
             return {schemas, calculations};
         })
         .catch(e => {
+
             return {schemas: {}, calculations: {}}
         })
 }

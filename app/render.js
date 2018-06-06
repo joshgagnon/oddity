@@ -97,6 +97,7 @@ module.exports = function render(env, body){
     }
     if(env.schemas[formName] && env.schemas[formName].calculations) {
         env.schemas[formName].calculations.map(calc => {
+            console.log(env.calculations)
             values =  deepmerge(body.values, env.calculations[calc](values, {moment}));
         });
     }
