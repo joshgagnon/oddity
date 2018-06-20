@@ -37,12 +37,12 @@ function filterise(env) {
     // item one
     // item one and item two
     // item one, item two, and item three
-    const joinAnd = function(items, attribute) {
+    const joinAnd = function(items, attribute, kwargs) {
         let result = '';
-
+        const join = (kwargs && kwargs.join) || 'and';
         // If two items, just return them with the word and in-between
         if (items.length == 2) {
-            return getValue(items[0], attribute) + ' and ' + getValue(items[1], attribute);
+            return getValue(items[0], attribute) + ' '+join+' ' + getValue(items[1], attribute);
         }
 
         items.map((item, index) => {
@@ -54,7 +54,7 @@ function filterise(env) {
                 result += ', ' + item;
             } else {
                 // Last item needs an 'and' before it
-                result += ', and ' + item;
+                result += ', '+join+' ' + item;
             }
         });
 

@@ -40,6 +40,10 @@ describe('Test rendering for schemas with test data', function() {
                             .then(zip => {
                                 return fs.writeFileAsync('/tmp/'+filename+'.odt', zip)
                             })
+                            .catch(e => {
+                                console.log("FAILED", folder, filename)
+                                throw e;
+                            })
                         )
                     )
                 ))
