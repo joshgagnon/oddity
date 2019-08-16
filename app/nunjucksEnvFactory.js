@@ -3,7 +3,7 @@ const nunjucks = require('nunjucks');
 const moment = require('moment');
 const Promise = require('bluebird');
 const fs = Promise.promisifyAll(require("fs"));
-
+const currencyjs = require('currency.js');
 
 function filterise(env) {
     const date = function(date) {
@@ -90,13 +90,7 @@ function filterise(env) {
         if(!x) {
             return '$0.00';
         }
-        if(typeof x === 'string'){
-            x = x.replace(/[^-0-9.]+/g, '');
-        }
-        x = parseFloat(x).toFixed(2);
-        const parts = x.toString().split(".");
-        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        return '$' + parts.join(".");
+        return currencyjs(x, {formatWithSymbol: true}).format();
     }
 
 

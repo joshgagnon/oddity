@@ -5,6 +5,7 @@ const nunjucks = Promise.promisifyAll(require('nunjucks'));
 const sanitize = require("sanitize-filename")
 const path = require('path');
 const moment = require('moment')
+const currency = require('currency.js')
 const deepmerge = require('deepmerge');
 
 
@@ -98,7 +99,7 @@ module.exports = function render(env, body){
     if(env.schemas[formName] && env.schemas[formName].calculations) {
         env.schemas[formName].calculations.map(calc => {
             console.log(env.calculations)
-            values =  deepmerge(body.values, env.calculations[calc](values, {moment}));
+            values =  deepmerge(body.values, env.calculations[calc](values, {moment, currency}));
         });
     }
     console.log('using base doc', defaultBaseDocPath);
