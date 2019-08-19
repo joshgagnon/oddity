@@ -90,6 +90,9 @@ function filterise(env) {
         if(!x) {
             return '$0.00';
         }
+        if(typeof x !== 'number' &&  typeof x !== 'string' && x.value) {
+            x = x.value;
+        }
         return currencyjs(x, {formatWithSymbol: true}).format();
     }
 
