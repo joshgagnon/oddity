@@ -112,7 +112,6 @@ module.exports = function render(env, body){
                         return packZip(formName, defaultBaseDocPath, renderedContentXml, images, namedImages, env)
                     })
             }
-
             return packZip(formName, defaultBaseDocPath, renderedContentXml, null, namedImages, env)
         })
 }

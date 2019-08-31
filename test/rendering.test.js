@@ -5,6 +5,8 @@ const fs = Promise.promisifyAll(require("fs"));
 const should = chai.should();
 const getEnvironments = require('../app/getEnvironments');
 const render = require('../app/render');
+const libxmljs = require("libxmljs");
+const JSZip = require("jszip");
 
 
 describe('Test rendering for schemas with test data', function() {
@@ -38,7 +40,13 @@ describe('Test rendering for schemas with test data', function() {
                                 return render(envs[schemaMap[schema]], {values: data, formName: folder})
                             })
                             .then(zip => {
-                                return fs.writeFileAsync('/tmp/'+filename+'.odt', zip)
+                                return JSZip.loadAsync(zip)
+                            })
+                            .then(content => {
+                               return content.files["content.xml"].async('text')
+                            })
+                            .then(xml => {
+                                return libxmljs.parseXml(xml);
                             })
                             .catch(e => {
                                 console.log("FAILED", folder, filename)
