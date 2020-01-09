@@ -5,6 +5,8 @@ const fs = Promise.promisifyAll(require("fs"));
 const should = chai.should();
 const getEnvironments = require('../app/getEnvironments');
 const render = require('../app/render');
+const libxmljs = require("libxmljs");
+const JSZip = require("jszip");
 
 
 describe('Test rendering for schemas with test data', function() {
@@ -31,20 +33,31 @@ describe('Test rendering for schemas with test data', function() {
             return fs.readdirAsync(testPath)
                 .then(schemaFolders => Promise.map(schemaFolders, folder =>
                     fs.readdirAsync(path.join(testPath, folder))
-                    .then(files =>  Promise.map(files, filename =>
-                        fs.readFileAsync(path.join(testPath, folder, filename))
+                    .then(files =>  Promise.map(files, filename => {
+                        let zip;
+                        return fs.readFileAsync(path.join(testPath, folder, filename))
                             .then(_data => {
                                 data = JSON.parse(_data)
                                 return render(envs[schemaMap[schema]], {values: data, formName: folder})
                             })
-                            .then(zip => {
-                                return fs.writeFileAsync('/tmp/'+folder+'.'+filename+'.odt', zip)
+                            .then(_zip => {
+                                zip = _zip;
+                                return JSZip.loadAsync(zip)
+                            })
+                            .then(content => {
+                                return content.files["content.xml"].async('text')
+                            })
+                            .then(xml => {
+                                return libxmljs.parseXml(xml);
+                            })
+                            .then(() => {
+                                return fs.writeFileAsync('/tmp/'+folder+'-'+filename+'.odt', zip);
                             })
                             .catch(e => {
                                 console.log("FAILED", folder, filename)
                                 throw e;
                             })
-                        )
+                        })
                     )
                 ))
             })

@@ -38,6 +38,7 @@
     "sanitize-filename": "^1.6.1"
   },
   "devDependencies": {
+    "libxmljs": "^0.19.5",
     "mocha": "^3.4.2",
     "xml2js": "^0.4.17"
   }
