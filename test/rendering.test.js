@@ -38,7 +38,7 @@ describe('Test rendering for schemas with test data', function() {
                                 return render(envs[schemaMap[schema]], {values: data, formName: folder})
                             })
                             .then(zip => {
-                                return fs.writeFileAsync('/tmp/'+filename+'.odt', zip)
+                                return fs.writeFileAsync('/tmp/'+folder+'.'+filename+'.odt', zip)
                             })
                             .catch(e => {
                                 console.log("FAILED", folder, filename)
