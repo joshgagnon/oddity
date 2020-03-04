@@ -7,7 +7,7 @@ const getEnvironments = require('../app/getEnvironments');
 const render = require('../app/render');
 const libxmljs = require("libxmljs");
 const JSZip = require("jszip");
-
+const os = require('os');
 
 describe('Test rendering for schemas with test data', function() {
     let envs, schemas, schemaMap;
@@ -51,7 +51,7 @@ describe('Test rendering for schemas with test data', function() {
                                 return libxmljs.parseXml(xml);
                             })
                             .then(() => {
-                                return fs.writeFileAsync('/tmp/'+folder+'-'+filename+'.odt', zip);
+                                return fs.writeFileAsync(path.join(os.tmpdir(), folder+'-'+filename+'.odt'), zip);
                             })
                             .catch(e => {
                                 console.log("FAILED", folder, filename)
